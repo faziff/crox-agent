@@ -1,0 +1,1513 @@
+# CROX — FULL n8n-INSPIRED WORKFLOW AUTOMATION PLATFORM
+
+## MASTER PRODUCT TRANSFORMATION SPECIFICATION
+
+You are working on CROX, an existing full-stack workflow automation SaaS platform.
+
+Act as a principal product designer, senior frontend engineer, backend architect, AI infrastructure engineer, workflow automation specialist, and security engineer.
+
+Your mission is to transform CROX into a complete professional visual workflow automation platform.
+
+The experience should closely follow the interaction patterns, usability, canvas experience, node discovery, and configuration workflow of n8n, while maintaining its own CROX brand identity.
+
+This is NOT a request to create a superficial dashboard or a static n8n-looking clone.
+
+Build a real working product.
+
+Use my attached screenshot as a reference for the workflow canvas. I particularly want a beautiful white canvas with extremely subtle grey dots, a professional interface, plenty of workspace, and a smooth node-building experience.
+
+The final product should feel like a mature commercial SaaS application.
+
+# SECTION 1 — EXISTING CODEBASE PRESERVATION
+
+First inspect the entire project.
+
+Existing stack:
+
+Frontend:
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- @xyflow/react
+- Lucide React
+- Motion
+
+Backend:
+- Node.js
+- Express
+- TypeScript
+- Google GenAI SDK
+
+Database:
+- SQLite
+- better-sqlite3
+- Existing database migration architecture.
+
+Existing important files:
+
+Frontend:
+- src/App.tsx
+- src/index.css
+- src/components/layout/AppShell.tsx
+- src/components/brand/CroxLogo.tsx
+- src/pages/WorkflowEditorPage.tsx
+- src/pages/DashboardPage.tsx
+- src/pages/TemplatesPage.tsx
+- src/pages/CredentialsPage.tsx
+- src/pages/ExecutionsPage.tsx
+- src/components/workflow-editor/CroxNodeComponent.tsx
+- src/components/workflow-editor/NodeConfigPanel.tsx
+- src/components/workflow-editor/ExecutionPanel.tsx
+- src/constants/nodeCatalog.ts
+- src/types/workflow.ts
+- src/services/api.ts
+
+Backend:
+- server.ts
+- server/config.ts
+- server/db/database.ts
+- server/services/executionEngine.ts
+- server/services/workflowValidator.ts
+- server/services/schedulerService.ts
+- server/services/novaService.ts
+- server/routes/workflows.ts
+- server/routes/executions.ts
+- server/routes/credentials.ts
+- server/routes/settings.ts
+- server/utils/crypto.ts
+- server/utils/ssrf.ts
+
+Important current limitations:
+
+The visible node search claims 30+ nodes, but the actual node catalog currently defines only nine node types.
+
+The current ai_node is basically a Gemini prompt execution node. It is not a proper AI Agent system with separate model, memory, tools, and output parser connections.
+
+The workflow editor currently contains too many responsibilities inside one large component.
+
+Address these architectural limitations.
+
+PRESERVATION RULES:
+
+- Preserve existing authentication.
+- Preserve user data.
+- Preserve existing workflows.
+- Preserve credentials and encryption.
+- Preserve webhook functionality.
+- Preserve scheduled execution.
+- Preserve execution history.
+- Preserve NOVA.
+- Preserve the existing database.
+- Maintain backwards compatibility with old workflows.
+- Preserve npm scripts.
+- Do not unnecessarily replace server.ts.
+- Do not rewrite working backend code without understanding it.
+
+Refactor existing components into smaller reusable modules wherever necessary.
+
+# SECTION 2 — CROX BRAND IDENTITY AND LOGO
+
+Create a completely improved CROX brand identity.
+
+Keep the product name exactly:
+
+CROX
+
+Design a professional geometric logo.
+
+Logo direction:
+
+- Create a distinctive CROX monogram.
+- Incorporate a subtle connection/node concept into the symbol.
+- Strong modern typography.
+- Clean geometric construction.
+- Recognizable at small sizes.
+- Suitable for a professional automation SaaS.
+- Avoid generic AI sparkle logos.
+- Avoid childish illustrations.
+- Avoid excessive gradients.
+
+Create:
+- Full CROX wordmark.
+- Compact logo symbol.
+- White version.
+- Dark version.
+- Favicon.
+- Application icon.
+- Loading animation.
+
+Update CroxLogo.tsx and all actual branding references.
+
+Keep the same brand across:
+- Landing page.
+- Dashboard.
+- Workflow editor.
+- Login.
+- Signup.
+- Application loading screen.
+
+# SECTION 3 — COMPLETE UI REDESIGN
+
+The present UI feels like a prototype.
+
+Transform it into a polished professional product.
+
+Design references:
+- n8n for workflow-building interactions.
+- Linear for navigation and interface clarity.
+- Stripe for typography and professional SaaS details.
+- Modern developer tools for information density.
+
+Do not copy n8n's logo or branding.
+
+## Visual design system
+
+Use:
+
+Primary background: White.
+
+Application background: Very light neutral grey.
+
+Canvas background: Pure white.
+
+Canvas dots: Extremely subtle light grey.
+
+Borders: Thin neutral grey.
+
+Text: Dark charcoal.
+
+Secondary text: Muted grey.
+
+Accent: One restrained CROX brand colour.
+
+Use consistent spacing, typography, shadows, and component sizing.
+
+Avoid:
+- Excessive pink.
+- Too much purple.
+- Dark oversized header strips.
+- Huge colourful cards.
+- Childish buttons.
+- Excessive rounded corners.
+- Unnecessary animations.
+- Inconsistent icon sizes.
+- Large empty dashboard cards.
+
+The interface must look precise and mature.
+
+Implement proper light and dark themes, with light as the default.
+
+# SECTION 4 — MAIN APPLICATION NAVIGATION
+
+Create a professional application shell.
+
+Use a compact collapsible left navigation.
+
+Navigation:
+
+- Overview
+- Projects
+- Workflows
+- Templates
+- Credentials
+- AI Providers
+- Integrations
+- Executions
+- Insights
+- Settings
+
+Show the CROX logo at the top.
+
+Add workspace selector.
+
+Add Create New button.
+
+Add profile menu.
+
+Add global search.
+
+The navigation should be:
+- Expandable.
+- Collapsible.
+- Responsive.
+- Keyboard accessible.
+- Consistent across the product.
+
+Use an appropriate compact width so the workflow canvas receives maximum screen space.
+
+# SECTION 5 — PROFESSIONAL PROJECT MANAGEMENT
+
+Build a real project management system.
+
+Add:
+
+- Personal workspace.
+- Project overview.
+- Create project.
+- Rename project.
+- Delete project.
+- Archive project.
+- Project descriptions.
+- Project-specific workflows.
+- Project-specific credentials where appropriate.
+- Workflow movement between projects.
+- Project switching.
+- Project search.
+
+Every project must have real database persistence.
+
+Create proper migrations.
+
+Connect workflows to project IDs.
+
+Backfill existing workflows into a default Personal project.
+
+Add authenticated backend endpoints.
+
+Never mix data belonging to different users.
+
+# SECTION 6 — NEW WORKFLOW CREATION EXPERIENCE
+
+This is an especially important requirement.
+
+When users click Create New Workflow, do not immediately throw them into an empty editor.
+
+First display a professional workflow creation screen.
+
+Heading:
+
+What would you like to build?
+
+Allow users to select their preferred workflow structure.
+
+Create visual selection cards with small live previews.
+
+OPTIONS:
+
+### 1. Blank Workflow
+
+A completely empty interactive canvas.
+
+### 2. Linear Pipeline
+
+A simple sequential workflow.
+
+Example:
+
+Trigger → Process Data → AI → Action.
+
+### 3. Flowchart / Branching Workflow
+
+A workflow with decisions, multiple paths, and branching connections.
+
+Example:
+
+Trigger → Condition → True / False → Different Actions.
+
+### 4. AI Agent Pipeline
+
+A central AI Agent with connected:
+- Chat Model.
+- Memory.
+- Multiple Tools.
+- Output Parser.
+
+### 5. Event-Driven Automation
+
+Workflows that begin from:
+- Webhooks.
+- Schedules.
+- Forms.
+- Chat events.
+- Application events.
+
+### 6. Multi-Agent Workflow
+
+Multiple specialized agents connected through a controlled orchestration system.
+
+Only enable this as a working structure once its backend execution is implemented.
+
+All workflow structures must use a compatible underlying workflow graph architecture.
+
+Do not create completely separate incompatible execution engines for each visual structure.
+
+Allow workflow name and project selection before creation.
+
+When a structure is selected, open the actual editor and create its appropriate starting canvas.
+
+The user must also be able to change canvas arrangement without breaking execution logic.
+
+# SECTION 7 — COMPLETE WORKFLOW EDITOR LAYOUT
+
+This is the highest-priority UI component.
+
+Rebuild the editor to feel like a professional visual automation workspace.
+
+## A. Editor header
+
+Left:
+- Back to Project.
+- Breadcrumb.
+- Editable Workflow Name.
+- Saved / Saving / Unsaved indicator.
+
+Center:
+- Editor tab.
+- Executions tab.
+- Evaluations tab.
+
+Right:
+- Undo.
+- Redo.
+- Validation indicator.
+- Workflow history.
+- Settings.
+- Draft / Published state.
+- Save.
+- Execute Workflow.
+- More actions.
+
+Add New Project and New Workflow in the global application creation menu.
+
+Do not confuse AI Studio's own preview controls with application components.
+
+## B. Left application rail
+
+Keep the main global navigation compact.
+
+Do not permanently consume a large portion of the canvas with the node library.
+
+## C. Main Canvas
+
+Use @xyflow/react as the actual rendering and interaction engine.
+
+Requirements:
+
+- Full working canvas.
+- Pure white surface.
+- Very subtle grey dotted background.
+- Infinite panning.
+- Smooth zoom.
+- Zoom to fit.
+- Reset zoom.
+- Mini-map.
+- Automatic layout.
+- Select multiple nodes.
+- Drag and drop.
+- Context menus.
+- Node grouping.
+- Collapsible groups.
+- Sticky notes.
+- Keyboard navigation.
+- Smooth connections.
+- Multi-branch support.
+- Connection validation.
+- Node selection.
+- Delete.
+- Duplicate.
+- Undo.
+- Redo.
+- Copy and paste.
+
+The dotted background must be a real canvas background, not a static image or decorative mockup.
+
+Use the React Flow Background component with dot rendering.
+
+Make the dots subtle enough that the workflow nodes remain the visual focus.
+
+Do not place a huge empty-state card permanently in the middle.
+
+Instead show a small professional empty-state helper with actions:
+
+- Add First Node.
+- Build with NOVA.
+- Choose Template.
+
+The user should be able to close it and work freely.
+
+## D. Node picker
+
+Implement a proper searchable node picker.
+
+Open it using:
+
+- Plus button on the canvas.
+- Plus button next to compatible nodes.
+- Tab keyboard shortcut.
+- Node search command.
+
+Display it as a professional side drawer.
+
+Search field at the top.
+
+Search should find:
+- Node names.
+- App names.
+- Integrations.
+- AI providers.
+- Model nodes.
+- Triggers.
+- Actions.
+- Tools.
+
+Show:
+- Recently used.
+- Favourite nodes.
+- Categories.
+- Descriptions.
+- Icons.
+- Compatibility.
+- Credential requirements.
+
+Support drag-and-drop.
+
+When a user selects a compatible node after selecting an existing node, automatically connect it.
+
+Preserve valid handle types.
+
+Do not automatically connect incompatible AI and standard workflow ports.
+
+## E. Right inspector
+
+When a node is selected, open the configuration inspector on the right.
+
+The node library and inspector should not unnecessarily compete for screen space.
+
+The inspector must have:
+- Parameters.
+- Settings.
+- Output.
+- Documentation.
+
+Every field must be connected to real node configuration.
+
+## F. Canvas toolbar
+
+Add floating canvas controls:
+
+- Add node.
+- Search nodes.
+- Add sticky note.
+- Select.
+- Arrange.
+- Fit view.
+- Zoom.
+- Minimap.
+- Fullscreen.
+
+Make them subtle and professional.
+
+# SECTION 8 — GLOBAL SEARCH AND COMMAND PALETTE
+
+Create an advanced global search system.
+
+Use Ctrl/Cmd + K.
+
+Search across:
+
+- Projects.
+- Workflows.
+- Nodes.
+- Apps.
+- Integrations.
+- AI models.
+- Credentials.
+- Templates.
+- Executions.
+- Settings.
+
+The node picker must also have its own focused search.
+
+Support keyboard navigation.
+
+Display grouped search results.
+
+Add recently accessed items.
+
+Make the search actually functional using real application data.
+
+# SECTION 9 — LARGE NODE AND INTEGRATION CATALOG
+
+Build a proper extensible node registry.
+
+Do not simply add labels to nodeCatalog.ts and call them functional.
+
+Each node must have:
+
+- Unique ID.
+- Display name.
+- Description.
+- Category.
+- Version.
+- Icon.
+- Configuration schema.
+- Input port definitions.
+- Output port definitions.
+- Connection compatibility.
+- Credential requirements.
+- Validation method.
+- Execution adapter.
+- Error-handling rules.
+
+Organize the library into:
+
+1. Triggers.
+2. AI Agents.
+3. AI Models.
+4. AI Tools.
+5. AI Memory.
+6. Output Parsers.
+7. App Integrations.
+8. Data Transformation.
+9. Flow Control.
+10. Developer Tools.
+11. Files and Documents.
+12. Human Approval.
+13. Utilities.
+
+## Trigger nodes
+
+Implement:
+
+- Manual Trigger.
+- Webhook Trigger.
+- Schedule Trigger.
+- Chat Trigger.
+- Form Trigger.
+- Error Trigger.
+
+## Core workflow nodes
+
+Implement:
+
+- HTTP Request.
+- Edit Fields.
+- Set Data.
+- IF.
+- Switch.
+- Merge.
+- Filter.
+- Sort.
+- Aggregate.
+- Limit.
+- Split Out.
+- Remove Duplicates.
+- Loop Over Items.
+- Wait.
+- Execute Workflow.
+- Stop And Error.
+- No Operation.
+
+## AI nodes
+
+Implement:
+
+- AI Agent.
+- Gemini Chat Model.
+- OpenAI Chat Model.
+- Anthropic Chat Model.
+- OpenAI-compatible model adapter.
+- Memory.
+- Windowed Memory.
+- Calculator Tool.
+- HTTP Request Tool.
+- Date and Time Tool.
+- Workflow Tool.
+- Custom Tool.
+- Structured Output Parser.
+- Auto-fixing Output Parser.
+
+Only mark a node available if its backend implementation genuinely exists.
+
+# SECTION 10 — COMPLETE AI PROVIDER AND MODEL SYSTEM
+
+Create a dedicated AI Providers management page.
+
+CROX must support an extensible model provider architecture.
+
+Initial provider architecture should cover:
+
+- Google Gemini.
+- OpenAI.
+- Anthropic.
+- OpenAI-compatible API providers.
+- Groq.
+- OpenRouter.
+- DeepSeek.
+- Mistral.
+- Ollama.
+
+Implement provider-specific adapters where needed.
+
+Do not assume every provider uses the same API protocol.
+
+Do not invent model IDs.
+
+Retrieve model identifiers from supported provider model-list endpoints where available.
+
+Where dynamic discovery is unavailable, allow verified manual model IDs and test them before activation.
+
+Each provider configuration should include:
+
+- Provider name.
+- Base URL where applicable.
+- API credentials.
+- Available models.
+- Default model.
+- Connection test.
+- Supported capabilities.
+- Usage information.
+- Connection health.
+
+Model capability detection:
+
+- Text generation.
+- Tool calling.
+- Structured output.
+- JSON mode.
+- Vision.
+- Streaming.
+- Embeddings.
+
+Only expose features supported by the selected provider and model.
+
+Add a clear provider setup interface.
+
+The actual API keys will be added by me later.
+
+Create all necessary configuration screens and backend support without hardcoding any secrets.
+
+# SECTION 11 — SECURE MULTIPLE API KEY MANAGEMENT
+
+This is a critical CROX requirement.
+
+I want the ability to configure multiple authorized API credentials.
+
+Create:
+
+Settings → AI Providers → Manage API Keys.
+
+Allow:
+
+- Add API Key.
+- Edit label.
+- Test key.
+- Enable key.
+- Disable key.
+- Remove key.
+- Set primary key.
+- Set permitted backup provider.
+- View masked key.
+- View connection status.
+- View last successful use.
+- View last error.
+- View provider usage information when available.
+
+Never display saved secret values.
+
+Never expose API keys in browser JavaScript, localStorage, React state persistence, logs, or frontend bundles.
+
+Store credentials encrypted on the backend using the existing encryption architecture.
+
+## Provider failover system
+
+Build a safe and reliable provider connection manager.
+
+Use:
+- Primary provider selection.
+- Explicit fallback providers.
+- Credential health checks.
+- Request timeouts.
+- Concurrency limits.
+- Bounded retries.
+- Retry-After handling.
+- Exponential backoff with jitter.
+- Error classification.
+- Circuit breaker.
+- Provider-specific cooldown.
+- Request cancellation.
+
+Important quota rules:
+
+Do not rotate API keys to evade provider rate limits, free-tier quotas, account restrictions, or billing limits.
+
+For example, multiple Gemini API keys within the same Google Cloud project share project-level quotas. Switching keys from that same project does not create additional quota.
+
+If a provider returns a genuine quota-exhaustion or billing error:
+- Report the actual issue.
+- Do not blindly retry.
+- Do not cycle through keys to circumvent it.
+- Use another independently authorized provider only where the provider's terms and configured access permit.
+- Clearly identify when user action is required.
+
+For temporary overload or rate spikes:
+- Respect Retry-After.
+- Apply bounded exponential backoff.
+- Limit concurrent requests.
+- Use a permitted backup provider if configured.
+
+Do not create infinite retry loops.
+
+The provider selector must choose a model that supports the requested operation.
+
+For example, do not silently switch from a tool-calling model to a model without tool-calling capability.
+
+Add cost and usage safeguards.
+
+# SECTION 12 — REAL AI AGENT ARCHITECTURE
+
+Implement a genuine AI Agent system.
+
+AI Agent must be a cluster/root node.
+
+It must have dedicated connection ports for:
+
+- Chat Model.
+- Memory.
+- Tools.
+- Output Parser.
+
+These must be separate from ordinary main workflow edges.
+
+The canvas must visually represent these relationships.
+
+Allow multiple tools connected to one AI Agent.
+
+## Agent parameters
+
+System instructions.
+
+User prompt.
+
+Dynamic variables.
+
+Agent objectives.
+
+Rules and restrictions.
+
+Model configuration.
+
+Memory configuration.
+
+Connected tools.
+
+Output configuration.
+
+Advanced options.
+
+## Agent options
+
+- Maximum iterations.
+- Maximum execution time.
+- Temperature where supported.
+- Maximum output tokens.
+- Tool approval.
+- Return intermediate steps.
+- Fallback model.
+- Structured output.
+- Error handling.
+
+## Execution sequence
+
+1. Receive workflow input.
+2. Build agent context.
+3. Load selected model.
+4. Load relevant memory.
+5. Resolve connected tool schemas.
+6. Call the model.
+7. Detect valid tool requests.
+8. Validate tool arguments.
+9. Execute authorized tools.
+10. Return results to the model.
+11. Continue within configured iteration limits.
+12. Apply output parsing.
+13. Return final result.
+
+Store meaningful execution traces.
+
+Redact secrets.
+
+Implement actual backend tool calls.
+
+Never mark a fake or simulated response as a successful live agent execution.
+
+# SECTION 13 — MEMORY SYSTEM
+
+Build working memory nodes.
+
+Initial types:
+
+- Simple Memory.
+- Windowed Memory.
+- Conversation Memory.
+
+Configuration:
+
+- Session identifier.
+- Conversation identifier.
+- Number of previous messages.
+- Context length.
+- Storage type.
+- Memory retrieval.
+- Reset session.
+
+Store memory through the backend.
+
+Isolate data between users and projects.
+
+Implement retention controls.
+
+Do not mix sessions accidentally.
+
+# SECTION 14 — TOOLS SYSTEM
+
+Implement actual executable tools.
+
+Initial tools:
+
+Calculator Tool:
+Safe mathematical evaluation.
+
+HTTP Request Tool:
+- URL.
+- Method.
+- Headers.
+- Authentication.
+- Parameters.
+- Request body.
+- Response format.
+- Timeout.
+
+Date & Time Tool:
+- Current date.
+- Timezone.
+- Date calculation.
+
+Workflow Tool:
+Run an authorized existing workflow.
+
+Custom Tool:
+- Tool name.
+- Description.
+- Input schema.
+- Approved backend implementation.
+
+Every tool must return structured results.
+
+Use the existing SSRF protection for outbound HTTP requests.
+
+Do not allow AI-generated tool arguments to bypass authorization or URL validation.
+
+Allow optional human approval for external actions with side effects.
+
+# SECTION 15 — APP INTEGRATIONS
+
+Build a reusable integration framework.
+
+The goal is to support a growing catalogue of applications through a consistent interface.
+
+Prioritize:
+
+Google:
+- Gmail.
+- Google Sheets.
+- Google Drive.
+- Google Calendar.
+
+Communication:
+- Slack.
+- Discord.
+- Telegram.
+
+Productivity:
+- Notion.
+- Airtable.
+- Trello.
+- Asana.
+- Linear.
+
+Business:
+- HubSpot.
+- Shopify.
+- WooCommerce.
+- WordPress.
+- Stripe.
+
+Development:
+- GitHub.
+
+Provide generic HTTP integration for services that do not yet have a dedicated connector.
+
+Each connector must declare:
+
+- Authentication type.
+- Required credentials.
+- OAuth scopes where applicable.
+- Available triggers.
+- Available actions.
+- Input schema.
+- Output schema.
+- Rate limits.
+- Error handling.
+- Connection test.
+
+Provide a proper Connect App process.
+
+Support OAuth 2.0 where the application requires it.
+
+Support API credentials where appropriate.
+
+Implement token refresh and secure storage when required.
+
+The integration library must distinguish:
+
+- Available.
+- Requires credentials.
+- Coming soon.
+
+Never show fake connected integrations.
+
+Do not claim that a service is fully integrated until a real backend adapter exists.
+
+# SECTION 16 — CREDENTIALS MANAGEMENT
+
+Improve the Credentials page.
+
+Support:
+
+- API Key.
+- AI Provider.
+- OAuth2.
+- SMTP.
+- HTTP Authentication.
+- Application-specific credentials.
+
+Features:
+
+- Create credentials.
+- Test connection.
+- Rename credentials.
+- Disable credentials.
+- Delete credentials.
+- Mask secret previews.
+- Select credentials inside nodes.
+- Show which workflows use a credential.
+
+All secrets must remain backend-only and encrypted.
+
+# SECTION 17 — NODE CONFIGURATION EXPERIENCE
+
+Completely improve NodeConfigPanel.tsx.
+
+Design a professional right-side configuration inspector.
+
+Sections:
+
+- Parameters.
+- Settings.
+- Input.
+- Output.
+- Documentation.
+
+Use dynamic schemas instead of writing every configuration form as duplicated JSX.
+
+Every node must have the appropriate controls.
+
+Support:
+
+- Text inputs.
+- Secure inputs.
+- Dropdowns.
+- Multi-select.
+- Credential selectors.
+- Expression editors.
+- JSON editors.
+- Key/value tables.
+- Dynamic mapping.
+- Input data preview.
+- Output preview.
+- Validation messages.
+- Required field indicators.
+
+Add expressions and workflow variable insertion.
+
+Example:
+
+{{ $json.email }}
+
+Provide a variable browser that displays available upstream data.
+
+Do not display hardcoded demo values as actual execution data.
+
+# SECTION 18 — CONNECTION AND FLOWCHART ENGINE
+
+Implement typed node connections.
+
+Connection types:
+
+1. Main workflow.
+2. AI Chat Model.
+3. AI Memory.
+4. AI Tool.
+5. AI Output Parser.
+
+Use distinct ports and visual treatments.
+
+Implement validation to stop incompatible connection types.
+
+Support:
+- Multiple outputs.
+- Conditional branches.
+- True/False paths.
+- Multiple tool connections.
+- AI sub-node connections.
+- Groups.
+- Loops where supported.
+
+Persist all connection data correctly.
+
+Do not allow AI connections to corrupt normal workflow traversal.
+
+Ensure all old workflows still load.
+
+# SECTION 19 — EXECUTION AND DEBUGGING
+
+Upgrade the existing ExecutionPanel.tsx.
+
+Create a proper bottom execution drawer.
+
+Tabs:
+
+- Logs.
+- Input.
+- Output.
+- Errors.
+- Execution Details.
+
+Features:
+
+- Execute workflow.
+- Execute selected node.
+- Inspect previous run.
+- Live execution status.
+- Node success indicator.
+- Node failure indicator.
+- Execution duration.
+- Input JSON.
+- Output JSON.
+- Error stack and explanation.
+- AI Agent trace.
+- Tool execution details.
+- Copy JSON.
+- Expand/collapse data.
+
+Clicking an execution error should focus the corresponding canvas node.
+
+Add cancellation where safely supported.
+
+Add retry behaviour without duplicate external side effects.
+
+Keep execution history in the database.
+
+Clearly distinguish live, failed, cancelled, and simulated executions.
+
+# SECTION 20 — ERROR HANDLING
+
+Add proper error handling at node and workflow levels.
+
+Node configuration:
+
+- Retry on failure.
+- Retry count.
+- Retry delay.
+- Timeout.
+- Continue on error.
+- Stop workflow.
+- Error output.
+
+Workflow configuration:
+
+- Execution timeout.
+- Retry policies.
+- Error workflow.
+- Execution concurrency.
+- Failure notification.
+
+Implement an Error Trigger.
+
+Implement Stop And Error.
+
+Give meaningful errors with actionable descriptions.
+
+Do not silently swallow exceptions.
+
+# SECTION 21 — STICKY NOTES AND CANVAS ORGANIZATION
+
+Support real sticky notes.
+
+Users can:
+
+- Add notes.
+- Edit text.
+- Choose subtle colours.
+- Resize.
+- Move.
+- Delete.
+- Save with workflow.
+
+Implement canvas groups.
+
+Users can:
+- Select multiple related nodes.
+- Create group.
+- Rename group.
+- Collapse and expand.
+- Move group.
+- Delete group.
+
+Keep connections and execution semantics correct.
+
+# SECTION 22 — WORKFLOW TEMPLATES
+
+Improve the template experience.
+
+Categories:
+
+- AI Automation.
+- Marketing.
+- Sales.
+- Lead Generation.
+- Communication.
+- E-commerce.
+- Data Processing.
+- Developer Automation.
+- Business Operations.
+
+Every template must have a valid graph and node configuration.
+
+When a user selects a template:
+
+- Clone it to the user's project.
+- Preserve node and edge structure.
+- Reset incompatible example credentials.
+- Explain which credentials are needed.
+- Allow editing before execution.
+
+# SECTION 23 — WORKFLOW HISTORY AND IMPORT/EXPORT
+
+Implement:
+
+- Workflow JSON export.
+- Workflow JSON import.
+- Duplicate.
+- Rename.
+- Move project.
+- Version history.
+- Restore previous version.
+
+Validate and sanitize imported workflows.
+
+Never execute imported workflows automatically.
+
+Never import secret credentials as trusted live credentials.
+
+# SECTION 24 — PUBLIC CROX LANDING PAGE
+
+Redesign the public CROX landing page without interfering with the authenticated application.
+
+Keep the CROX brand.
+
+Create a polished SaaS landing experience.
+
+Sections:
+
+1. Navigation.
+2. Hero.
+3. Workflow canvas preview.
+4. AI automation features.
+5. Integrations.
+6. AI Agent capabilities.
+7. Workflow templates.
+8. Product screenshots.
+9. How CROX works.
+10. Pricing.
+11. FAQ.
+12. Footer.
+
+Use actual CROX screenshots or real UI components for product previews.
+
+Do not create misleading screenshots or pretend non-existing features work.
+
+## Basic SEO
+
+Implement:
+
+- Unique page title.
+- Meta description.
+- Canonical URL.
+- Open Graph metadata.
+- Social sharing metadata.
+- Semantic HTML.
+- Logical H1/H2 hierarchy.
+- Image alt text.
+- Favicon.
+- robots.txt.
+- sitemap.xml.
+- Appropriate SoftwareApplication structured data.
+
+Use accurate product descriptions.
+
+Do not make unsupported claims about performance or rankings.
+
+Maintain excellent mobile responsiveness and page speed.
+
+# SECTION 25 — PERFORMANCE AND RESPONSIVENESS
+
+The application must feel smooth.
+
+Optimize:
+
+- React rendering.
+- Node rendering.
+- Edge rendering.
+- Canvas state.
+- Search.
+- Large execution logs.
+- Configuration panels.
+- Database queries.
+- API requests.
+
+Use memoization appropriately.
+
+Avoid excessive re-renders.
+
+Implement efficient pagination.
+
+Use lazy loading for appropriate panels.
+
+Responsive support:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile.
+
+The main workflow editing experience should be optimized primarily for desktop while remaining accessible on smaller screens.
+
+# SECTION 26 — SECURITY
+
+Preserve all existing security mechanisms.
+
+Add:
+
+- Ownership checks.
+- Credential access validation.
+- Project isolation.
+- Secret masking.
+- Encrypted credential storage.
+- API request validation.
+- Safe expression handling.
+- SSRF protection.
+- Timeouts.
+- Resource limits.
+- Safe tool execution.
+- OAuth callback validation.
+- Rate limiting.
+
+Never place API secrets in frontend source.
+
+Never bypass existing authentication.
+
+Never execute arbitrary code directly inside the main Express process.
+
+If a Code node is implemented, it must use an appropriate isolated execution environment.
+
+# SECTION 27 — DATABASE CHANGES
+
+Create safe incremental SQLite migrations.
+
+Add or extend:
+
+- Projects.
+- Workflow project associations.
+- Workflow versions.
+- Provider configurations.
+- Authorized provider credentials.
+- Provider health metadata.
+- AI agent configuration.
+- AI memory sessions.
+- AI cluster connections.
+- Integration metadata.
+- Execution traces.
+
+Reuse the existing encrypted credentials architecture whenever appropriate.
+
+Never delete old workflow data during migrations.
+
+Make migrations reversible where practical.
+
+# SECTION 28 — TESTING
+
+Test the complete application.
+
+Project management:
+- Create.
+- Rename.
+- Delete.
+- Switch.
+
+Workflow:
+- Create.
+- Save.
+- Reload.
+- Edit.
+- Undo.
+- Redo.
+- Connect.
+- Import.
+- Export.
+
+Nodes:
+- Search.
+- Add.
+- Configure.
+- Connect.
+- Validate.
+- Execute.
+
+AI:
+- Connect model.
+- Test model.
+- Connect tools.
+- Call a tool.
+- Connect memory.
+- Validate output parser.
+- Handle unavailable credentials.
+- Handle rate limits.
+
+Integrations:
+- Test connection.
+- Validate credentials.
+- Execute a supported action.
+- Handle expired authorization.
+
+Execution:
+- Inspect logs.
+- Inspect output.
+- Handle failures.
+- Cancel where supported.
+
+Security:
+- Test ownership isolation.
+- Test credential masking.
+- Test SSRF protection.
+- Test imported workflow validation.
+
+Run:
+
+npm run lint
+npm test
+npm run build
+
+Fix newly introduced errors.
+
+Do not claim tests passed unless they actually passed.
+
+# SECTION 29 — IMPLEMENTATION STRATEGY
+
+Work in the following sequence.
+
+PHASE 1 — Audit:
+Inspect existing frontend, backend, database, and execution engine.
+
+PHASE 2 — Branding and UI:
+Redesign CROX logo, global shell, landing page, typography, design system, and navigation.
+
+PHASE 3 — Projects:
+Build the real Projects system and database associations.
+
+PHASE 4 — Editor:
+Build the professional canvas, header, searchable node picker, inspector, toolbar, groups, and sticky notes.
+
+PHASE 5 — Workflow structures:
+Implement Linear, Flowchart, AI Agent, Event-Driven, Multi-Agent, and Blank starting structures.
+
+PHASE 6 — Node registry:
+Build the actual categorized node catalogue and configuration schemas.
+
+PHASE 7 — AI infrastructure:
+Build AI provider adapters, model catalogue, API credential management, secure fallback and AI Agent cluster architecture.
+
+PHASE 8 — Integrations:
+Implement real app connector architecture and prioritized working connectors.
+
+PHASE 9 — Execution:
+Improve workflow execution, tool calling, memory, validation, logs, debugging, and failure recovery.
+
+PHASE 10 — Final QA:
+Run tests, build, performance checks, and fix issues.
+
+# SECTION 30 — VERY IMPORTANT FINAL INSTRUCTIONS
+
+Do not stop after producing a plan.
+
+Do not only redesign the homepage.
+
+Do not create non-functional buttons.
+
+Do not create fake node integrations.
+
+Do not use static screenshots in place of the actual workflow editor.
+
+Do not pretend all models are supported when they are not.
+
+Do not remove existing working features.
+
+Do not unnecessarily replace the technology stack.
+
+Do not hardcode API keys.
+
+Do not invent model IDs.
+
+Do not silently report failed execution as success.
+
+Do not create a monolithic WorkflowEditorPage.tsx.
+
+Keep the implementation modular, reusable, secure, and testable.
+
+Use the existing CROX project as the source of truth.
+
+If the complete implementation is too large for one coding pass, finish each phase with working code, run its checks, and continue to the next phase. Never mark unfinished functionality as complete.
+
+## FINAL PRODUCT VISION
+
+CROX should become a professional visual workflow automation platform.
+
+I want:
+
+- An n8n-inspired working editor.
+- A beautiful white dotted canvas.
+- Advanced flowchart structures.
+- AI Agent pipelines.
+- Multiple AI models.
+- Connected tools.
+- Memory.
+- Structured output.
+- A large integration ecosystem.
+- Project management.
+- Credentials management.
+- Secure provider management.
+- Proper API fallback.
+- Execution monitoring.
+- Workflow debugging.
+- Automation templates.
+- A professional landing page.
+- Fast performance.
+- Basic technical SEO.
+
+Everything must use the CROX brand.
+
+The interface should feel like a serious international SaaS product.
+
+Start auditing the codebase and implement the actual product transformation.

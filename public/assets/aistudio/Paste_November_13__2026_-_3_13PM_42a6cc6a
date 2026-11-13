@@ -1,0 +1,1131 @@
+# CROX — Complete n8n-Inspired Workflow Automation Platform Transformation
+
+Act as a principal SaaS product architect, senior React/TypeScript engineer, backend engineer, workflow automation specialist, and professional UI/UX designer.
+
+Your task is to transform my EXISTING CROX project into a professional, advanced, AI-powered visual workflow automation platform inspired by the workflow-building experience of n8n.
+
+This is a complete product upgrade, not a simple UI redesign.
+
+You must inspect the entire existing codebase, understand its architecture, identify missing features, repair existing bugs, and implement the improvements directly into the current project.
+
+Do not simply provide recommendations, mockups, or a development plan. Make the actual code changes.
+
+# 1. Understand the Existing Project Before Making Changes
+
+The current technology stack:
+
+Frontend:
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- @xyflow/react (React Flow)
+- Lucide React
+- Motion
+
+Backend:
+- Node.js
+- Express
+- TypeScript
+- Google GenAI SDK
+
+Database:
+- SQLite
+- better-sqlite3
+- Existing versioned database migrations
+
+Existing architecture includes:
+
+- src/pages/WorkflowEditorPage.tsx
+- src/pages/DashboardPage.tsx
+- src/pages/TemplatesPage.tsx
+- src/pages/CredentialsPage.tsx
+- src/pages/ExecutionsPage.tsx
+- src/components/layout/AppShell.tsx
+- src/components/workflow-editor/CroxNodeComponent.tsx
+- src/components/workflow-editor/NodeConfigPanel.tsx
+- src/components/workflow-editor/ExecutionPanel.tsx
+- src/constants/nodeCatalog.ts
+- src/types/workflow.ts
+- src/services/api.ts
+- server/services/executionEngine.ts
+- server/services/workflowValidator.ts
+- server/services/schedulerService.ts
+- server/services/novaService.ts
+- server/db/database.ts
+- server/routes/workflows.ts
+
+IMPORTANT:
+
+Preserve the existing application, authentication system, database, API contracts, workflow execution engine, scheduler, credential encryption, webhook handling, and NOVA assistant.
+
+Do not unnecessarily replace existing working components.
+
+Do not destroy existing users' workflows or stored credentials.
+
+Do not replace the application with a static frontend.
+
+First audit the existing source code and understand how all components communicate.
+
+# 2. New Professional CROX Application Layout
+
+Redesign the entire application experience using a clean, professional automation-platform interface.
+
+Visual inspiration: n8n, Linear, Stripe, and modern developer SaaS platforms.
+
+Do not copy n8n branding or reproduce its exact interface. Develop a distinctive CROX identity.
+
+Design requirements:
+
+- Professional typography.
+- Clean spacing and alignment.
+- Consistent iconography.
+- Subtle borders and shadows.
+- Professional light and dark themes.
+- Minimal visual clutter.
+- Smooth but restrained animations.
+- Excellent desktop experience.
+- Responsive mobile layout.
+
+Use white, charcoal, black, and neutral grey as the primary interface colours, with a restrained CROX accent colour.
+
+Avoid excessive gradients, oversized cards, unnecessary purple styling, and exaggerated rounded components.
+
+## Global Sidebar
+
+Create a proper application sidebar.
+
+Include:
+
+1. CROX Logo.
+2. Workspace selector.
+3. Overview.
+4. Projects.
+5. Workflows.
+6. Templates.
+7. Credentials.
+8. Executions.
+9. Insights.
+10. Settings.
+
+Add a prominent Create/New button.
+
+The sidebar must support:
+- Collapse and expand.
+- Tooltips.
+- Active navigation indicators.
+- Responsive mobile drawer.
+- Workspace switching.
+
+The same design language must be used throughout the dashboard and workflow editor.
+
+# 3. Complete Project Management System
+
+Currently, the project does not have an actual Projects database system.
+
+Implement real project management.
+
+Create:
+
+- Personal workspace.
+- Projects list.
+- New Project.
+- Project details.
+- Rename project.
+- Delete or archive project.
+- Project description.
+- Project-specific workflow listing.
+- Move workflow between projects.
+- Project creation modal.
+- Project selector.
+
+Add a proper project breadcrumb in the workflow editor.
+
+For example:
+
+Personal / Marketing Automation / Lead Generation Workflow
+
+Add a New button in the top navigation with these options:
+
+- New Workflow
+- New Project
+- Import Workflow
+- Create from Template
+
+These must perform actual operations.
+
+Backend requirements:
+
+Create a new SQLite migration for projects.
+
+Add project ownership and workflow association.
+
+Backfill existing users' workflows into their default Personal project.
+
+Add authenticated project CRUD endpoints.
+
+Maintain user ownership validation.
+
+Do not use hardcoded demo projects.
+
+# 4. Professional Workflow Editor — Highest Priority
+
+The workflow editor is the most important part of CROX.
+
+Rebuild its layout and interactions to provide a professional node-based automation experience.
+
+## Editor Header
+
+Create a modern header with:
+
+Left:
+- Back to project.
+- Workspace breadcrumb.
+- Project breadcrumb.
+- Editable workflow name.
+- Save status indicator.
+
+Center:
+- Editor.
+- Executions.
+- Evaluations.
+
+Right:
+- Undo.
+- Redo.
+- Workflow settings.
+- Save.
+- Execute Workflow.
+- Publish / Unpublish.
+- More actions menu.
+
+More actions should support:
+
+- Rename.
+- Duplicate.
+- Import.
+- Export JSON.
+- Move to another project.
+- Workflow settings.
+- Delete.
+
+Do not create buttons that do nothing.
+
+## Workflow Canvas
+
+Create a large, professional node-based canvas.
+
+Requirements:
+
+- Infinite canvas.
+- Smooth zoom and pan.
+- Subtle dotted grid.
+- Professional nodes.
+- Smooth animated connection lines.
+- Automatic node positioning.
+- Fit-to-screen control.
+- Zoom in and out.
+- Mini-map.
+- Multi-node selection.
+- Drag-and-drop.
+- Copy and paste.
+- Duplicate nodes.
+- Delete nodes.
+- Undo and redo.
+- Keyboard shortcuts.
+- Context menus.
+- Node quick actions.
+- Connection validation.
+
+Add a floating right-side toolbar with:
+
+- Add node.
+- Search.
+- Sticky notes.
+- Canvas controls.
+- Fit view.
+
+Add an empty-state experience.
+
+When there are no nodes, show:
+
+Add your first step
+
+Build with AI
+
+Import workflow
+
+The Build with AI button should connect with the existing NOVA workflow generator.
+
+When clicking a node's add button, open the node picker and automatically connect the newly added node where the connection is valid.
+
+Support both drag-and-drop and click-to-add.
+
+The node picker should open when the user clicks the plus icon or presses Tab.
+
+# 5. Complete Node Library
+
+The existing node catalog only contains nine node types.
+
+Expand it into a proper, searchable, categorized node library.
+
+Organize the library into these categories:
+
+## A. Triggers
+
+Implement:
+
+- Manual Trigger.
+- Webhook Trigger.
+- Schedule Trigger.
+- Chat Trigger.
+- Form Trigger, when its backend is implemented.
+- Error Trigger.
+
+## B. AI & Agent Nodes
+
+This category is extremely important.
+
+Implement:
+
+- AI Agent.
+- Gemini Chat Model.
+- OpenAI-compatible Chat Model.
+- Simple Memory.
+- Windowed Conversation Memory.
+- Structured Output Parser.
+- Auto-fixing Output Parser.
+- Calculator Tool.
+- HTTP Request Tool.
+- Date & Time Tool.
+- Workflow Tool.
+- Custom Tool with a safely defined tool schema.
+
+Only expose providers and models that have real, working backend adapters. Do not display unsupported models as functional integrations.
+
+## C. Core Nodes
+
+Implement:
+
+- HTTP Request.
+- Edit Fields / Set Data.
+- Code (only with an appropriately sandboxed execution implementation).
+- Filter.
+- Sort.
+- Limit.
+- Aggregate.
+- Merge.
+- Split Out.
+- Remove Duplicates.
+- Data Transformation.
+- JSON Operations.
+- Date & Time Operations.
+
+## D. Flow Control
+
+Implement:
+
+- IF.
+- Switch.
+- Merge.
+- Loop Over Items.
+- Wait.
+- Stop And Error.
+- Execute Workflow.
+- No Operation.
+
+## E. Communication
+
+Implement or properly integrate:
+
+- Send Email.
+- Slack / Discord Webhook.
+- Notification.
+- HTTP-based message delivery.
+
+Do not pretend that an integration is connected when no backend adapter exists.
+
+## F. Developer & API
+
+Implement:
+
+- HTTP Request.
+- Webhook.
+- API Authentication.
+- GraphQL Request, if supported.
+- Data Processing.
+- JSON Parser.
+
+Every node must have its own:
+- Icon.
+- Name.
+- Description.
+- Category.
+- Configuration schema.
+- Input and output definitions.
+- Validation rules.
+- Execution adapter.
+- Error handling.
+
+Existing node types and saved workflows must remain compatible.
+
+# 6. REAL AI AGENT SYSTEM — Critical Requirement
+
+Do not treat AI Agent as another ordinary Gemini prompt node.
+
+Build an actual AI Agent architecture.
+
+An AI Agent must be a root/cluster node that supports connected sub-nodes.
+
+The main workflow connections must remain separate from AI-specific connections.
+
+Implement distinct connection types, for example:
+
+- Main workflow connection.
+- Chat Model connection.
+- Memory connection.
+- Tool connection.
+- Output Parser connection.
+
+An AI Agent should have a central node with dedicated connection points.
+
+Below the AI Agent, display separate connector ports:
+
+- Chat Model.
+- Memory.
+- Tools.
+- Output Parser.
+
+The user must be able to connect multiple supported tools to one AI Agent.
+
+Model and tool connections must be visually distinct from normal workflow edges.
+
+Do not include AI sub-node connections in normal sequential DAG traversal.
+
+Implement correct serialization and persistence of cluster relationships.
+
+## AI Agent Configuration Panel
+
+When the user clicks AI Agent, open a professional configuration inspector.
+
+Create these sections.
+
+### Parameters
+
+Agent instructions:
+- System Message.
+- Agent Role.
+- Agent Objective.
+- Behaviour Instructions.
+- Rules and Restrictions.
+
+User Prompt:
+- Define below.
+- Take input from previous node.
+- Use workflow variables.
+- Use supported expressions.
+
+Prompt editor:
+- Syntax highlighting where practical.
+- Variable suggestions.
+- Insert expression.
+- Example data.
+- Dynamic variable selector.
+
+### Chat Model
+
+Display the connected model.
+
+Allow model configuration through its Chat Model sub-node.
+
+Support actual available model providers and credentials.
+
+### Memory
+
+Allow optional memory connection.
+
+Configuration:
+- Session identifier.
+- Conversation identifier.
+- Context window length.
+- Memory storage.
+- Memory retrieval.
+- Clear/reset session.
+- Persistent versus session-only memory.
+
+Implement actual storage using the existing database architecture where appropriate.
+
+### Tools
+
+Display all connected tools.
+
+Show:
+- Tool name.
+- Tool description.
+- Tool configuration.
+- Required parameters.
+- Credential status.
+- Tool execution status.
+
+Allow multiple tools.
+
+### Output
+
+Allow:
+
+- Plain text.
+- JSON.
+- Structured output schema.
+- Connected output parser.
+- Response field mapping.
+
+### Agent Options
+
+Create a collapsible Add Option section.
+
+Include:
+
+- Maximum iterations.
+- Maximum execution time.
+- Temperature where supported by the connected model.
+- Maximum output tokens.
+- Return intermediate steps.
+- Enable streaming, only if supported by the execution transport.
+- Continue on recoverable errors.
+- Fallback behaviour.
+- Tool execution approval.
+- Structured response validation.
+
+Set safe maximum iteration and timeout limits.
+
+## AI Agent Execution Engine
+
+Implement actual agent execution on the backend.
+
+Expected sequence:
+
+1. Receive workflow input.
+2. Resolve system and user prompts.
+3. Load the connected chat model.
+4. Load the connected memory.
+5. Load available tool definitions.
+6. Send the request to the model.
+7. Inspect the model's response.
+8. When a valid tool call is requested, validate its arguments.
+9. Execute the selected tool.
+10. Return tool results to the model.
+11. Repeat until the agent completes or reaches its configured limit.
+12. Apply the output parser when connected.
+13. Return the final structured result.
+
+Implement:
+- Bounded tool execution loops.
+- Maximum iteration protection.
+- Tool argument validation.
+- Timeout handling.
+- Error reporting.
+- Intermediate execution traces.
+- Credential protection.
+- Tool-specific permissions.
+
+For actions with external side effects, support optional human approval.
+
+The HTTP Request Tool must use the existing SSRF protection. Never allow the AI Agent to bypass it.
+
+The Calculator Tool should support safe mathematical expressions without arbitrary code execution.
+
+The Workflow Tool must only call workflows the user is authorized to execute.
+
+A missing API key must result in a clear configuration error or explicitly marked simulated result. Never falsely report a simulated execution as a real AI response.
+
+# 7. Chat Model Nodes
+
+Create independent model sub-nodes.
+
+Start with a properly implemented Gemini Chat Model using the existing Google GenAI SDK.
+
+Design the provider architecture so that more providers can be added without rewriting the agent engine.
+
+Model configuration:
+
+- Provider.
+- Model.
+- API credential.
+- Temperature.
+- Maximum output tokens.
+- Top P where supported.
+- Timeout.
+- Retry.
+- Model-specific options.
+
+Show credential connection status.
+
+Provide a Test Connection button.
+
+Retrieve or validate model identifiers through supported provider interfaces. Do not invent model IDs.
+
+# 8. Memory Nodes
+
+Create dedicated Memory sub-nodes.
+
+Implement:
+
+Simple Memory:
+- Session ID.
+- Conversation ID.
+- Stored messages.
+- Retrieval.
+- Context limit.
+
+Windowed Memory:
+- Number of previous messages.
+- Context window.
+- Session persistence.
+
+Persist memory securely and isolate it between users.
+
+Do not expose one user's conversation memory to another user.
+
+# 9. Tool Nodes
+
+Implement a proper tool execution architecture.
+
+Initial working tools:
+
+Calculator:
+- Accept structured mathematical arguments.
+- Return calculated results.
+
+HTTP Request Tool:
+- URL.
+- HTTP method.
+- Headers.
+- Query parameters.
+- Body.
+- Authentication credential.
+- Response parsing.
+- Timeout.
+
+Date & Time Tool:
+- Current date.
+- Timezone conversion.
+- Date calculations.
+
+Workflow Tool:
+- Select an existing authorized workflow.
+- Define its input schema.
+- Execute the selected workflow.
+- Return the output.
+
+Custom Tool:
+- Tool name.
+- Description.
+- Input schema.
+- Backend adapter.
+- Execution result.
+
+Tools should appear as individual connected nodes beneath the AI Agent.
+
+# 10. Structured Output Parser
+
+Create a dedicated output parser node.
+
+Features:
+
+- JSON schema editor.
+- Schema validation.
+- Required properties.
+- Type definitions.
+- Nested objects.
+- Arrays.
+- Output preview.
+- Validation errors.
+- Optional auto-fixing strategy.
+
+The parser must produce actual validated JSON rather than simply displaying JSON-looking text.
+
+# 11. Node Configuration Inspector
+
+Redesign NodeConfigPanel.tsx.
+
+Use a professional right-side inspector.
+
+Tabs:
+
+- Parameters.
+- Settings.
+- Output.
+- Documentation.
+
+Every node should have a consistent configuration layout.
+
+Support:
+
+- Dropdowns.
+- Dynamic fields.
+- Add/remove parameters.
+- Credential selectors.
+- Expression fields.
+- JSON editors.
+- Input previews.
+- Output previews.
+- Required field indicators.
+- Inline validation.
+- Node-specific settings.
+
+When credentials are missing, display a Connect Credential action.
+
+Do not make users navigate through multiple unrelated pages just to connect a credential.
+
+# 12. Advanced Node Settings and Error Recovery
+
+Give nodes a proper Settings section.
+
+Implement:
+
+- Retry on failure.
+- Maximum retry attempts.
+- Wait between retries.
+- Continue on fail.
+- Always output data.
+- On error: Stop or continue according to supported execution semantics.
+- Node timeout.
+- Error details.
+- Execution metadata.
+
+At workflow level implement:
+
+- Maximum execution duration.
+- Retry policies.
+- Error workflow configuration.
+- Execution cancellation.
+- Execution status tracking.
+
+Implement an Error Trigger and Stop And Error node.
+
+Validate settings both on the frontend and backend.
+
+# 13. Execution & Debugging System
+
+The current platform already has workflow executions and node execution records.
+
+Upgrade rather than replace them.
+
+Create a professional bottom execution drawer.
+
+Sections:
+
+- Logs.
+- Input.
+- Output.
+- Errors.
+- Execution Details.
+
+On execution:
+
+- Highlight the currently running node.
+- Show success and failure states.
+- Show execution duration.
+- Display simulated status accurately.
+- Show node-by-node execution progression.
+- Display each AI tool invocation.
+- Display intermediate AI Agent responses.
+- Display tool inputs and outputs.
+
+Allow:
+
+- Test Workflow.
+- Execute Workflow.
+- Test Individual Node.
+- Run From Selected Node, with correct upstream data handling.
+- Inspect Previous Execution.
+- Copy JSON.
+- Expand and collapse logs.
+- View failed node details.
+
+Do not expose private credential values or secrets in execution outputs.
+
+# 14. Workflow Validation
+
+Enhance workflowValidator.ts.
+
+Check:
+
+- Missing start triggers.
+- Missing node configurations.
+- Invalid connections.
+- Circular connections.
+- Invalid cluster relationships.
+- Missing Chat Model.
+- Missing required AI Agent tools.
+- Invalid tool configuration.
+- Missing credentials.
+- Invalid expressions.
+- Invalid JSON schemas.
+- Unreachable nodes.
+- Invalid branch connections.
+- Incompatible connection types.
+
+Display errors with node references.
+
+Clicking an error should select and focus the corresponding node on the canvas.
+
+Add a validation overview before publishing.
+
+# 15. Workflow Publishing and Saving
+
+Clearly separate:
+
+Save:
+Save the workflow configuration.
+
+Publish:
+Validate and publish an eligible workflow.
+
+Unpublish:
+Disable published automation.
+
+Maintain the existing active/inactive lifecycle and webhook/schedule behaviour.
+
+Show:
+- Saved.
+- Saving.
+- Unsaved Changes.
+- Published.
+- Unpublished.
+- Validation Failed.
+
+Never claim that a workflow is published when its backend operation fails.
+
+# 16. Workflow Creation and Templates
+
+Improve the entire workflow creation experience.
+
+Provide:
+
+- Blank Workflow.
+- Create with NOVA AI.
+- Start from Template.
+- Import Workflow JSON.
+
+Create a searchable template library.
+
+Categories:
+
+- AI Automation.
+- Marketing.
+- Lead Generation.
+- Sales.
+- Communication.
+- Data Processing.
+- Developer Automation.
+- Business Operations.
+
+Templates must contain valid node configurations and connections.
+
+When a template is selected, clone it into the user's project.
+
+Keep template credentials disconnected until the user configures their own.
+
+# 17. Sticky Notes and Canvas Productivity
+
+Implement sticky notes.
+
+Allow users to:
+
+- Add notes.
+- Edit notes.
+- Change note colour.
+- Resize notes.
+- Move notes.
+- Delete notes.
+- Save notes with the workflow.
+
+Implement keyboard shortcuts:
+
+- Ctrl/Cmd + S: Save.
+- Ctrl/Cmd + Z: Undo.
+- Ctrl/Cmd + Shift + Z: Redo.
+- Ctrl/Cmd + C: Copy.
+- Ctrl/Cmd + V: Paste.
+- Ctrl/Cmd + A: Select All.
+- Delete/Backspace: Delete selected nodes.
+- Tab: Open node picker.
+- Escape: Close the active panel.
+
+Implement shortcuts carefully so they do not interfere with text inputs.
+
+# 18. Better Node Library Experience
+
+The node picker must have:
+
+- Search input.
+- Category filters.
+- Recently used nodes.
+- Favourite nodes.
+- Node descriptions.
+- Node icons.
+- Node type indicators.
+- Suggested next nodes.
+- Search results.
+- Empty-state messaging.
+
+When an existing node is selected, suggest compatible next nodes.
+
+For example:
+
+Webhook Trigger → IF → AI Agent → HTTP Request → Send Email.
+
+The suggestions should reflect real supported connection types.
+
+# 19. Workflow History and Import/Export
+
+Implement:
+
+- Export workflow as JSON.
+- Import workflow JSON.
+- Duplicate workflow.
+- Rename workflow.
+- Workflow version snapshots.
+- Restore previous version.
+
+Version snapshots must be saved through the backend.
+
+Ensure imported workflows are validated and sanitized before saving.
+
+Do not trust imported credentials or execute untrusted imported configurations automatically.
+
+# 20. Database and Backend Architecture
+
+Implement the necessary database migrations.
+
+Add:
+
+- Projects.
+- Workflow-to-project association.
+- Workflow version history.
+- AI Agent configuration.
+- AI cluster connections.
+- AI memory sessions.
+- Any required execution metadata.
+
+Preserve current records through safe migrations.
+
+Use authenticated API routes.
+
+Validate:
+- User ownership.
+- Project ownership.
+- Workflow ownership.
+- Credential ownership.
+- Tool authorization.
+
+Follow existing server architecture rather than placing all business logic inside React components.
+
+Do not store API keys in frontend code.
+
+Keep encryption, SSRF protection, and secret redaction intact.
+
+# 21. Fix Existing Code and Functional Bugs
+
+Audit the full codebase for:
+
+- TypeScript errors.
+- React runtime errors.
+- Missing imports.
+- Broken API requests.
+- Stale state and callback bugs.
+- Invalid node serialization.
+- Missing React Flow edge handlers.
+- Undo/redo history problems.
+- Incorrect save status.
+- Incorrect loading states.
+- Missing error boundaries.
+- Broken responsive layouts.
+- Invalid configuration handling.
+- Broken workflow connections.
+- Backend validation issues.
+
+Pay particular attention to the existing workflow editor history system.
+
+Ensure node movement, connection changes, deletion, configuration changes, undo and redo behave correctly.
+
+Ensure a failed save never silently becomes a successful save.
+
+Ensure a failed evaluation does not run against stale workflow data.
+
+Make the application stable before adding unnecessary visual effects.
+
+# 22. Performance
+
+Optimize the canvas for large workflows.
+
+Implement:
+
+- Memoized node components.
+- Stable callbacks.
+- Efficient state updates.
+- Efficient edge updates.
+- Lazy loading for heavy panels.
+- Debounced search.
+- Efficient execution log rendering.
+- Proper cleanup of listeners and subscriptions.
+
+Avoid unnecessary full-canvas re-renders.
+
+# 23. Design Quality
+
+Use a consistent professional design system.
+
+Create reusable:
+
+- Buttons.
+- Dropdowns.
+- Modals.
+- Tooltips.
+- Tabs.
+- Side panels.
+- Node cards.
+- Form controls.
+- Status indicators.
+- Empty states.
+- Toast notifications.
+
+Avoid excessive component nesting and duplicated styles.
+
+Use Lucide icons consistently.
+
+All components should have meaningful hover, focus, active, disabled, loading and error states.
+
+# 24. Testing and Acceptance Criteria
+
+Do not finish after merely changing the visual appearance.
+
+Run the existing test suite and extend it.
+
+Test:
+
+1. User login and authentication.
+2. Create a project.
+3. Create a workflow inside the project.
+4. Open workflow editor.
+5. Add a trigger.
+6. Add an action.
+7. Connect nodes.
+8. Save workflow.
+9. Reload workflow.
+10. Edit node configuration.
+11. Undo and redo.
+12. Execute workflow.
+13. Inspect execution logs.
+14. Test node individually.
+15. Add AI Agent.
+16. Connect Chat Model.
+17. Connect at least one Tool.
+18. Execute an actual tool call through the agent.
+19. Connect Memory.
+20. Test memory isolation between users.
+21. Connect Output Parser.
+22. Test invalid configurations.
+23. Test publishing validation.
+24. Test project switching.
+25. Test workflow import and export.
+26. Test existing legacy workflows.
+27. Test responsive layouts.
+
+Run:
+
+npm run lint
+npm test
+npm run build
+
+Fix all errors that are introduced by your changes.
+
+Do not claim these commands passed unless they actually run successfully.
+
+# 25. Implementation Rules
+
+This is extremely important.
+
+1. Work inside the existing CROX project.
+2. Inspect the actual implementation before changing files.
+3. Preserve the existing tech stack.
+4. Preserve all existing working functionality.
+5. Implement features in the frontend AND backend.
+6. Do not create static buttons.
+7. Do not use fake AI Agent executions.
+8. Do not display unsupported integrations as functional.
+9. Do not hardcode secret API keys.
+10. Do not remove existing database records.
+11. Do not rewrite server.ts unnecessarily.
+12. Maintain existing npm scripts.
+13. Update TypeScript types alongside database and execution changes.
+14. Keep old workflows compatible.
+15. Build reusable components rather than a huge monolithic editor component.
+16. Make all changes testable.
+
+If a feature requires substantial backend work, implement the backend too. Never pretend a frontend-only implementation is complete.
+
+# 26. Required Implementation Order
+
+Work in these stages:
+
+PHASE 1:
+Audit the complete project, repair existing errors and establish a working baseline.
+
+PHASE 2:
+Implement the redesigned application layout, navigation, workspace selector and Projects system.
+
+PHASE 3:
+Rebuild the workflow editor canvas, toolbar, node picker and inspector.
+
+PHASE 4:
+Expand the node catalog and create proper node configuration schemas.
+
+PHASE 5:
+Implement the AI Agent cluster architecture, Chat Model connections, Memory, Tools and Output Parser.
+
+PHASE 6:
+Implement backend AI Agent execution and tool calling.
+
+PHASE 7:
+Improve execution monitoring, debugging, validation and error handling.
+
+PHASE 8:
+Implement import/export, workflow history and productivity improvements.
+
+PHASE 9:
+Run tests, fix bugs, optimize performance and verify the complete application.
+
+Do not stop after Phase 3.
+
+# FINAL EXPECTATION
+
+I want CROX to feel like a serious professional workflow automation product, not a basic React Flow demo.
+
+The workflow editor must be powerful, intuitive and visually polished.
+
+The AI Agent must have actual connected models, tools, memory and structured output capabilities.
+
+The Projects system must work with real database persistence.
+
+The node library must be searchable and expandable.
+
+The execution engine must execute real supported actions and show accurate results.
+
+The entire platform must remain connected to its existing backend.
+
+Start by auditing the existing source code, then implement the transformation directly.
+
+At completion, provide:
+- Summary of implemented features.
+- Files created.
+- Files modified.
+- Database migrations added.
+- Backend endpoints added.
+- Features that are actually functional.
+- Features that still require external credentials.
+- Test results.
+- Any remaining limitations.
+
+Do not give me a superficial redesign. Build the actual CROX product.

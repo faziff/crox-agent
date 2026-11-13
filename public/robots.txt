@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /workflows/
+Disallow: /projects
+Disallow: /credentials
+Disallow: /ai-providers
+Disallow: /integrations
+Disallow: /executions
+Disallow: /insights
+Disallow: /settings
+
+Sitemap: /sitemap.xml

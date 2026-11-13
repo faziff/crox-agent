@@ -1,0 +1,1591 @@
+# CROX — MASTER PRODUCT DEVELOPMENT & ENGINEERING SPECIFICATION
+
+**Product:** CROX  
+**Category:** AI-Powered Visual Workflow Automation SaaS  
+**Product Philosophy:** Describe it. Build it. Automate it.  
+**Development Objective:** Build a complete, functional, scalable, secure, and professionally designed workflow automation platform inspired by the usability and visual workflow architecture of n8n.
+
+---
+
+# 1. MASTER DEVELOPMENT DIRECTIVE
+
+Act as a senior full-stack software architect, product designer, frontend engineer, backend engineer, database architect, security engineer, and QA engineer.
+
+Your task is to design and develop **CROX**, a complete AI-powered visual workflow automation platform.
+
+CROX should enable individuals, businesses, and teams to automate repetitive tasks by visually connecting triggers, actions, external integrations, conditional logic, and AI-powered processing nodes.
+
+The platform should combine:
+
+- The flexibility of professional visual workflow automation.
+- The simplicity of a beginner-friendly user experience.
+- The intelligence of AI-assisted workflow creation.
+- The reliability of a modern SaaS architecture.
+- The security of a properly engineered multi-user application.
+- The visual quality of a premium commercial software product.
+
+The final application must be a cohesive software product, not a static dashboard, frontend-only prototype, or collection of disconnected UI screens.
+
+## Mandatory Development Rules
+
+1. Inspect the entire existing project before making changes.
+2. Identify the current framework, dependencies, folder structure, database, backend, and existing functionality.
+3. Preserve functioning code and existing architecture wherever practical.
+4. Do not unnecessarily rebuild or replace working components.
+5. Follow a modular, maintainable, and scalable architecture.
+6. Implement actual functionality behind every important interactive control.
+7. Persist user data and application state appropriately.
+8. Implement meaningful validation, loading, success, and error states.
+9. Never silently discard user changes.
+10. Never claim an external integration is functional unless it has actually been connected and tested.
+11. Do not substitute static illustrations for interactive application functionality.
+12. Do not leave important features as unfinished placeholders.
+13. Do not invent API responses, execution results, or successful integration states.
+14. Do not expose API keys, credentials, or backend secrets to the browser.
+15. Do not stop after generating the project structure or frontend.
+
+**Development instruction:** Work directly within the available project workspace. Make the necessary code changes, install required dependencies, configure the application, run the available checks, resolve errors, and provide a working application with clear startup instructions.
+
+When a required external service is unavailable, implement a properly separated integration adapter and display its unconfigured status clearly.
+
+---
+
+# 2. PRODUCT IDENTITY & BRAND DESIGN
+
+## 2.1 Brand Identity
+
+Product name: **CROX**
+
+Product positioning:
+
+An intelligent workflow automation platform that makes powerful automation accessible to everyone.
+
+Brand message:
+
+"Describe it. Build it. Automate it."
+
+The CROX brand should communicate:
+
+- Intelligence.
+- Simplicity.
+- Reliability.
+- Creativity.
+- Professionalism.
+- Technological innovation.
+
+Use the existing approved CROX logo and brand assets when available. Preserve the established geometric logo concept rather than replacing it with an unrelated mascot.
+
+NOVA is the platform's dedicated AI assistant and should be visually distinct from the CROX logo.
+
+## 2.2 Visual Design Direction
+
+Create a premium, minimal, modern SaaS interface.
+
+The application should feel comparable in design quality to established commercial products such as Linear, Framer, Stripe, and modern automation platforms.
+
+Design principles:
+
+- Clean, spacious layouts.
+- Refined typography.
+- Consistent component dimensions.
+- Clear visual hierarchy.
+- Carefully balanced whitespace.
+- Subtle borders and shadows.
+- Purposeful iconography.
+- Smooth but restrained transitions.
+- Consistent corner radii.
+- Professional empty states.
+- Responsive layouts.
+
+Avoid:
+
+- Excessive gradients.
+- Unnecessary decorative graphics.
+- Oversized icons.
+- Overcrowded dashboards.
+- Inconsistent spacing.
+- Excessive animations.
+- Random color combinations.
+- Generic AI-generated dashboard styling.
+
+## 2.3 Color System
+
+Use the established CROX brand identity and preserve existing project color tokens when available.
+
+The primary CROX visual identity should follow its established red brand direction.
+
+Create a reusable design-token system containing:
+
+- Primary brand color.
+- Secondary brand color.
+- Background colors.
+- Surface colors.
+- Text colors.
+- Border colors.
+- Muted colors.
+- Success states.
+- Warning states.
+- Error states.
+- Active and selected states.
+
+Use color consistently across navigation, buttons, cards, workflow nodes, execution states, and interactive elements.
+
+Do not introduce an unrelated color identity.
+
+## 2.4 Typography
+
+Use Inter or a similarly refined modern sans-serif typeface.
+
+Define a consistent typographic scale for:
+
+- Main page headings.
+- Section headings.
+- Card headings.
+- Body content.
+- Descriptions.
+- Labels.
+- Buttons.
+- Navigation.
+- Technical metadata.
+
+## 2.5 NOVA — CROX AI Assistant
+
+NOVA is the primary visible AI entity inside CROX.
+
+Design NOVA as a premium, friendly, floating oval/orb-style AI character without a human face.
+
+NOVA should visually communicate different operational states:
+
+- Idle.
+- Listening.
+- Thinking.
+- Generating.
+- Executing.
+- Completed.
+- Waiting for approval.
+- Error.
+
+Keep NOVA elegant, compact, and visually consistent with CROX.
+
+It should act as the user's intelligent assistant rather than simply being a decorative floating button.
+
+---
+
+# 3. TECHNICAL ARCHITECTURE
+
+Design the application using a modular full-stack architecture.
+
+## 3.1 Preferred Technology Stack
+
+**Frontend**
+
+- React or Next.js.
+- TypeScript.
+- Tailwind CSS.
+- Reusable component architecture.
+- React Flow (@xyflow/react) for the visual workflow editor.
+- Appropriate state management solution.
+
+**Backend**
+
+- Python FastAPI or an appropriate existing Node.js backend.
+- RESTful APIs.
+- Modular service architecture.
+- Authentication and authorization middleware.
+- Workflow execution services.
+- Integration adapters.
+- Credential management services.
+
+**Database**
+
+- PostgreSQL for production.
+- SQLite as a supported local development alternative.
+- SQLAlchemy or an appropriate ORM.
+- Structured database migrations.
+
+**Infrastructure**
+
+- Environment-based configuration.
+- Proper application logging.
+- Background execution support.
+- Configurable execution limits.
+- Docker Compose where appropriate.
+- Clear development and production configuration.
+
+## 3.2 Architecture Requirements
+
+Separate the application into logically organized modules.
+
+Suggested frontend structure:
+
+- components/
+- pages/ or app/
+- layouts/
+- features/
+- workflow-editor/
+- node-library/
+- assistant/
+- templates/
+- credentials/
+- executions/
+- dashboard/
+- services/
+- hooks/
+- stores/
+- types/
+- utils/
+
+Suggested backend structure:
+
+- api/
+- core/
+- database/
+- models/
+- schemas/
+- services/
+- auth/
+- workflows/
+- execution/
+- integrations/
+- credentials/
+- templates/
+- assistant/
+- tests/
+
+Adapt this structure to the existing project rather than forcing unnecessary folder changes.
+
+## 3.3 Data Architecture
+
+Create properly related database models for:
+
+- Users.
+- User sessions or refresh tokens.
+- Workflows.
+- Workflow versions where appropriate.
+- Workflow nodes and edges, or a validated serialized graph.
+- Workflow executions.
+- Node execution results.
+- Credentials.
+- Templates.
+- User settings.
+
+Every user-owned resource must have clear ownership relationships.
+
+Use appropriate database indexes, foreign keys, unique constraints, and timestamps.
+
+Persist complete workflow graph structures, including node positions, configurations, connections, and metadata.
+
+---
+
+# 4. PUBLIC MARKETING WEBSITE
+
+Create a polished public landing page that introduces CROX.
+
+## Navigation
+
+Left:
+- CROX logo and wordmark.
+
+Center:
+- Features.
+- Templates.
+- Pricing.
+
+Right:
+- Log In.
+- Sign Up Free.
+
+Navigation should be responsive and consistent.
+
+## Hero Section
+
+Headline:
+
+**"Automate your work, visually."**
+
+Description:
+
+"Build intelligent workflows by connecting your favorite tools, automating repetitive tasks, and letting AI handle the complex parts."
+
+Primary CTA: Get Started Free.
+
+Secondary CTA: See How It Works.
+
+Display a high-quality representation of the actual CROX workflow editor.
+
+The visual should represent genuine product functionality rather than being the only representation of the application.
+
+## Features
+
+Create four professional feature sections:
+
+**Visual Workflow Builder**
+
+Build automation workflows using an interactive drag-and-drop editor.
+
+**AI-Powered Automation**
+
+Use configurable AI nodes to summarize, generate, analyze, and process information.
+
+**Ready-Made Templates**
+
+Start quickly using professionally designed, editable automation templates.
+
+**Connect Your Tools**
+
+Connect external services using API integrations, webhooks, and supported connectors.
+
+## How It Works
+
+Show three clear steps:
+
+1. Choose a Trigger.
+2. Connect Your Actions.
+3. Activate Your Workflow.
+
+## Templates Preview
+
+Show three initial templates:
+
+- Welcome Email on Signup.
+- Daily AI Summary Report.
+- Webhook to Notification.
+
+Each preview must include a description, workflow preview, and working Use Template interaction.
+
+## Pricing
+
+**Free — $0/month**
+
+- Up to 3 active workflows.
+- 100 executions per month.
+- Basic workflow nodes.
+- Community support.
+
+**Pro — $15/month**
+
+- Unlimited workflows.
+- Higher execution allowance subject to infrastructure limits.
+- Advanced AI automation.
+- Priority support.
+
+Keep pricing transparent. Do not implement misleading trial countdowns or claim unlimited infrastructure capacity.
+
+Structure billing so a payment provider can be integrated later.
+
+## Footer
+
+Include:
+
+- CROX branding.
+- Product links.
+- Templates.
+- Pricing.
+- Documentation.
+- Contact.
+- Terms of Service.
+- Privacy Policy.
+- Copyright information.
+
+---
+
+# 5. AUTHENTICATION & USER MANAGEMENT
+
+Implement a complete user authentication system.
+
+## Registration
+
+Fields:
+
+- Full Name.
+- Email.
+- Password.
+- Confirm Password.
+
+Requirements:
+
+- Validate required fields.
+- Validate email format.
+- Enforce reasonable password requirements.
+- Confirm matching passwords.
+- Hash passwords securely.
+- Display inline validation errors.
+- Include loading and success states.
+- Create the user's account in the database.
+- Establish an authenticated session.
+- Redirect to the dashboard.
+
+## Login
+
+Fields:
+
+- Email.
+- Password.
+
+Requirements:
+
+- Verify credentials securely.
+- Implement protected application routes.
+- Maintain authenticated sessions.
+- Display appropriate error messages.
+- Support logout.
+- Prevent unauthorized resource access.
+
+## Password Recovery
+
+Create a functional forgot-password interface.
+
+Implement secure token-based recovery when an email provider is configured.
+
+Otherwise, clearly indicate that email delivery requires provider configuration.
+
+Never store plaintext passwords or expose sensitive authentication information through frontend storage.
+
+Prefer secure HttpOnly cookies for session handling, with appropriate CSRF protections when required.
+
+---
+
+# 6. AUTHENTICATED APPLICATION LAYOUT
+
+Create a consistent authenticated application shell.
+
+## Sidebar Navigation
+
+Include:
+
+- Dashboard.
+- Workflows.
+- Templates.
+- Credentials.
+- Executions.
+- Settings.
+
+Bottom section:
+
+- User avatar.
+- Account name.
+- Account menu.
+- Logout.
+
+The sidebar should support expanded and collapsed states.
+
+## Main Application Area
+
+Use a consistent layout containing:
+
+- Page title.
+- Optional description.
+- Contextual actions.
+- Main content.
+- Reusable cards and tables.
+- Appropriate responsive spacing.
+
+All authenticated pages should feel like part of one cohesive product.
+
+---
+
+# 7. DASHBOARD
+
+Create a functional dashboard displaying actual user-specific application data.
+
+## Dashboard Header
+
+Title: My Workflows.
+
+Include:
+
+- Search field.
+- Workflow filters.
+- Status filters.
+- Create New Workflow action.
+
+## Statistics
+
+Display:
+
+- Total Workflows.
+- Active Workflows.
+- Total Executions.
+- Successful Executions.
+
+Calculate these values from actual database records.
+
+Do not hardcode statistics.
+
+## Workflow Cards
+
+Every workflow card should display:
+
+- Workflow name.
+- Active or inactive status.
+- Last modified date.
+- Last execution status.
+- Number of nodes.
+- Workflow thumbnail or preview.
+- Three-dot action menu.
+
+Available actions:
+
+- Open.
+- Rename.
+- Duplicate.
+- Activate.
+- Deactivate.
+- Delete.
+
+All operations must update persistent application data.
+
+## Empty State
+
+When no workflows exist, display:
+
+**"Your automation journey starts here."**
+
+Provide:
+
+- Create Your First Workflow.
+- Explore Templates.
+- Describe an Automation with NOVA.
+
+---
+
+# 8. WORKFLOW MANAGEMENT
+
+Implement complete workflow CRUD functionality.
+
+Users should be able to:
+
+- Create workflows.
+- Open workflows.
+- Rename workflows.
+- Save workflows.
+- Duplicate workflows.
+- Delete workflows.
+- Activate and deactivate workflows.
+- Search and filter workflows.
+- View their execution status.
+
+Every workflow must contain:
+
+- Unique identifier.
+- Owner identifier.
+- Name.
+- Description.
+- Status.
+- Nodes.
+- Edges.
+- Creation timestamp.
+- Updated timestamp.
+- Optional execution settings.
+
+Ensure all workflow operations verify ownership on the backend.
+
+Support appropriate confirmation dialogs for destructive operations.
+
+---
+
+# 9. VISUAL WORKFLOW EDITOR — HIGHEST PRIORITY
+
+The workflow editor is the central feature of CROX.
+
+It must receive the greatest engineering attention.
+
+Implement a genuinely interactive node-based editor using React Flow (@xyflow/react) or an equivalent production-suitable library.
+
+Do not create a static diagram or screenshot-based imitation.
+
+## 9.1 Editor Layout
+
+Build three major regions:
+
+**Left:** Node Library.
+
+**Center:** Interactive Workflow Canvas.
+
+**Right:** Node Configuration Panel.
+
+Add:
+
+- Top toolbar.
+- Execution panel.
+- Canvas controls.
+- Optional minimap.
+
+The layout should be inspired by professional visual automation editors while maintaining CROX's own identity.
+
+## 9.2 Editor Toolbar
+
+Include:
+
+- Back to Dashboard.
+- Editable workflow name.
+- Save.
+- Undo and redo where supported.
+- Active/Inactive toggle.
+- Test Workflow.
+- Run Workflow.
+- Save status.
+
+Show accurate statuses:
+
+- Saved.
+- Saving.
+- Unsaved Changes.
+- Running.
+- Completed.
+- Failed.
+
+Implement autosave carefully or provide explicit save functionality with unsaved-change protection.
+
+Never silently discard edits.
+
+## 9.3 Node Library
+
+Organize nodes into searchable categories.
+
+### Triggers
+
+**Webhook Trigger**
+
+Starts a workflow when an HTTP request arrives.
+
+**Schedule Trigger**
+
+Starts a workflow according to a scheduled time or cron expression.
+
+### Actions
+
+**HTTP Request**
+
+Sends HTTP requests to external APIs.
+
+**Send Email**
+
+Sends email using a configured provider.
+
+**Condition (IF/ELSE)**
+
+Evaluates conditions and routes execution into separate branches.
+
+**Set/Transform Data**
+
+Creates, modifies, and transforms workflow data.
+
+### AI
+
+**AI Node**
+
+Processes data using a configured LLM provider and prompt.
+
+Every node should include:
+
+- Icon.
+- Node name.
+- Short description.
+- Category.
+- Input handles.
+- Output handles.
+- Unique identifier.
+- Default configuration.
+- Defined execution behavior.
+
+## 9.4 Drag-and-Drop
+
+Users must be able to:
+
+- Drag nodes from the node library.
+- Drop nodes onto the canvas.
+- Calculate correct canvas coordinates.
+- Create new node instances.
+- Select and move nodes.
+- Duplicate nodes.
+- Delete nodes.
+
+Prevent accidental duplicate IDs.
+
+## 9.5 Node Connections
+
+Implement actual connections using node handles.
+
+Requirements:
+
+- Connect output handles to compatible input handles.
+- Display visible edges.
+- Support edge selection and deletion.
+- Validate connection compatibility.
+- Prevent invalid self-connections.
+- Detect cycles where unsupported.
+- Support multiple outgoing connections where appropriate.
+- Support separate true/false connections for conditional nodes.
+
+Edges must represent real workflow execution relationships, not decorative lines.
+
+## 9.6 Canvas Navigation
+
+Support:
+
+- Mouse panning.
+- Zoom in.
+- Zoom out.
+- Fit view.
+- Reset zoom.
+- Background grid.
+- Node selection.
+- Optional minimap.
+
+Ensure controls work consistently across supported browsers.
+
+Support touch navigation on mobile where practical.
+
+## 9.7 Node Configuration
+
+When a node is selected, display its configuration in the right panel.
+
+Changes must update the actual workflow graph.
+
+### Webhook Trigger
+
+- HTTP method.
+- Webhook path.
+- Request configuration.
+- Sample input data.
+- Webhook URL preview.
+- Endpoint status.
+
+### Schedule Trigger
+
+- Frequency.
+- Schedule interval.
+- Cron expression.
+- Timezone.
+- Next scheduled run preview.
+
+### HTTP Request
+
+- Request URL.
+- HTTP method.
+- Headers.
+- Query parameters.
+- Request body.
+- Authentication selection.
+- Timeout.
+- Response configuration.
+
+### Send Email
+
+- Recipient.
+- Subject.
+- Email body.
+- Sender credential.
+- HTML option.
+
+### Condition
+
+- Input variable.
+- Comparison operator.
+- Comparison value.
+- True branch.
+- False branch.
+
+### Set/Transform Data
+
+- Input fields.
+- Output fields.
+- Transformation rules.
+- Field mapping.
+
+### AI Node
+
+- AI provider.
+- Model selection.
+- Credential selection.
+- Prompt.
+- Input variables.
+- Output format.
+- Temperature where supported.
+- Token limits where supported.
+
+Include validation messages and appropriate default values.
+
+## 9.8 Workflow Graph Persistence
+
+Persist the entire graph structure.
+
+Example logical structure:
+
+- workflow_id
+- nodes[]
+  - id
+  - type
+  - position
+  - configuration
+  - execution metadata
+- edges[]
+  - id
+  - source
+  - target
+  - sourceHandle
+  - targetHandle
+- settings
+- metadata
+
+When reopening a workflow, restore its original:
+
+- Nodes.
+- Positions.
+- Connections.
+- Configuration.
+- Execution settings.
+
+Refresh the browser and verify persistence.
+
+---
+
+# 10. WORKFLOW EXECUTION ENGINE
+
+Build a modular backend execution engine.
+
+This is a core product feature and must not be replaced with frontend-only animations.
+
+## 10.1 Execution Lifecycle
+
+When a user tests or runs a workflow:
+
+1. Validate the workflow graph.
+2. Validate node configurations.
+3. Identify the starting trigger or entry node.
+4. Construct a valid execution plan.
+5. Resolve node dependencies.
+6. Execute nodes in the correct order.
+7. Pass outputs to downstream nodes.
+8. Evaluate conditional branches.
+9. Record node-level inputs and outputs.
+10. Record errors and execution durations.
+11. Update workflow execution status.
+12. Persist the execution report.
+
+## 10.2 Execution States
+
+Each node must support:
+
+- Pending.
+- Running.
+- Success.
+- Failed.
+- Skipped.
+
+The workflow execution must support:
+
+- Queued.
+- Running.
+- Success.
+- Failed.
+- Cancelled.
+
+Update the visual canvas to reflect real backend execution states.
+
+## 10.3 Execution Architecture
+
+Create independent execution adapters for each node type.
+
+Examples:
+
+- Webhook execution adapter.
+- Schedule execution adapter.
+- HTTP request adapter.
+- Email adapter.
+- Conditional logic adapter.
+- Data transformation adapter.
+- AI provider adapter.
+
+Do not place all execution logic inside frontend components.
+
+## 10.4 Data Passing
+
+Pass structured output between connected nodes.
+
+Each execution step should receive:
+
+- Previous node outputs.
+- Available workflow context.
+- Relevant configuration.
+- Execution metadata.
+
+Validate data formats and handle missing fields safely.
+
+Use a consistent execution context throughout the workflow.
+
+## 10.5 Conditional Branching
+
+Conditional nodes must implement actual true/false routing.
+
+Only the selected branch should execute.
+
+Unselected branch nodes should receive the Skipped state.
+
+## 10.6 Error Handling
+
+Implement:
+
+- Node-level error capture.
+- Execution timeouts.
+- Safe execution limits.
+- Clear error messages.
+- Failure propagation rules.
+- Execution cancellation where practical.
+- Retry policies where appropriate.
+
+Never expose internal secrets or sensitive stack traces to ordinary users.
+
+## 10.7 Execution Panel
+
+Display:
+
+- Execution status.
+- Start time.
+- Completion time.
+- Total duration.
+- Successful nodes.
+- Failed nodes.
+- Skipped nodes.
+
+When selecting an execution result, display:
+
+- Input data.
+- Output data.
+- Error details.
+- Node duration.
+- Execution status.
+
+Mock adapters are acceptable for providers that are not configured, but their results must be explicitly marked as simulated.
+
+Never show a simulated email or API request as a real external delivery.
+
+---
+
+# 11. NOVA — AI WORKFLOW ASSISTANT
+
+Build NOVA as an integrated AI assistant available from the dashboard and workflow editor.
+
+## 11.1 Assistant Interface
+
+Include:
+
+- Floating NOVA orb.
+- Expandable assistant panel.
+- Natural-language input.
+- Submit action.
+- Example prompts.
+- Loading and thinking states.
+- Workflow preview.
+
+Placeholder:
+
+"Describe what you want to automate..."
+
+Example requests:
+
+- Send me an email every morning with a daily summary.
+- Notify me whenever someone submits a contact form.
+- Fetch data from an API and summarize it using AI.
+- Automatically process new customer registrations.
+
+## 11.2 Workflow Generation
+
+When a request is submitted:
+
+1. Analyze the natural-language request.
+2. Identify the intended trigger.
+3. Identify required actions.
+4. Determine node configurations.
+5. Determine valid connections.
+6. Generate unique node IDs.
+7. Generate canvas positions.
+8. Construct the workflow graph.
+9. Validate the graph.
+10. Display a preview.
+11. Allow the user to edit and save it.
+
+Example:
+
+Request:
+
+"Send me an email every morning summarizing new signups."
+
+Generated workflow:
+
+Schedule Trigger → AI Node → Send Email
+
+The generated result must be a real workflow structure that can be opened in the visual editor.
+
+## 11.3 AI Provider Architecture
+
+Create a modular AI service interface.
+
+Support a configurable provider architecture so providers can be added without rewriting the entire application.
+
+Keep provider credentials on the backend.
+
+An initial rule-based generation engine is acceptable when no LLM provider is configured, provided that:
+
+- It generates actual node objects.
+- It creates valid connections.
+- It produces editable configurations.
+- It identifies unsupported requirements.
+- It clearly communicates its limitations.
+
+Do not claim natural-language AI processing is connected when the application is using deterministic rules.
+
+---
+
+# 12. TEMPLATES LIBRARY
+
+Create a dedicated templates page.
+
+Initial templates:
+
+1. Welcome Email on Signup.
+2. Daily AI Summary Report.
+3. Webhook to Notification.
+4. API Data Processing.
+5. AI Content Summarizer.
+
+Every template must contain:
+
+- Name.
+- Description.
+- Category.
+- Number of nodes.
+- Workflow preview.
+- Use Template action.
+
+## Template Installation
+
+When a user selects Use Template:
+
+1. Create a new workflow.
+2. Generate new unique node IDs.
+3. Preserve node configurations.
+4. Preserve connections.
+5. Generate appropriate canvas positions.
+6. Assign the workflow to the current user.
+7. Save it to the database.
+8. Open it in the workflow editor.
+
+Never modify the original template.
+
+Every installed template must become an independent editable workflow.
+
+---
+
+# 13. CREDENTIAL MANAGEMENT
+
+Build a secure credential management system.
+
+## Credentials Dashboard
+
+Display:
+
+- Credential name.
+- Credential type.
+- Masked value.
+- Creation date.
+- Last updated.
+- Edit action.
+- Delete action.
+
+## Supported Credential Types
+
+- API Key.
+- AI Provider Key.
+- Email SMTP.
+- HTTP Authentication.
+
+## Add Credential Modal
+
+Fields:
+
+- Credential type.
+- Credential label.
+- Secret/API key value.
+
+## Security Architecture
+
+Requirements:
+
+- Encrypt stored secrets using authenticated encryption.
+- Use a backend-managed encryption key from environment configuration.
+- Never return full secrets in normal API responses.
+- Never save raw credentials in localStorage.
+- Never include secrets in frontend logs.
+- Restrict credentials to their owner.
+- Mask all credential values.
+- Support credential updates and deletion.
+- Avoid exposing secrets through execution reports.
+
+Show only safe masked information after a credential has been saved.
+
+If encryption configuration is missing, fail securely and explain the missing configuration rather than storing unencrypted credentials.
+
+---
+
+# 14. EXECUTION HISTORY
+
+Create a dedicated execution history page.
+
+## Execution Table
+
+Columns:
+
+- Workflow Name.
+- Execution ID.
+- Status.
+- Started At.
+- Duration.
+- Number of Nodes.
+- View Details.
+
+## Status Types
+
+- Success.
+- Failed.
+- Running.
+- Cancelled.
+
+## Execution Details
+
+Display:
+
+- Execution summary.
+- Workflow name.
+- Execution identifier.
+- Start time.
+- Completion time.
+- Total duration.
+- Node execution results.
+- Input/output data.
+- Error details.
+- Execution path.
+
+Execution history must be persisted in the database.
+
+Users must only be able to view executions belonging to their own workflows.
+
+---
+
+# 15. SETTINGS & ACCOUNT MANAGEMENT
+
+Create a complete settings interface.
+
+Sections:
+
+**Profile**
+
+- Full name.
+- Email.
+- Profile avatar where supported.
+
+**Security**
+
+- Password management.
+- Active session management where supported.
+
+**Preferences**
+
+- Timezone.
+- Theme preference.
+- Notification preferences where implemented.
+
+**Account**
+
+- Account information.
+- Logout.
+- Account deletion interface with appropriate confirmation.
+
+Changes must persist in the backend.
+
+---
+
+# 16. WEBHOOKS & SCHEDULED AUTOMATION
+
+Implement the infrastructure required for active workflows.
+
+## Webhooks
+
+Requirements:
+
+- Unique webhook endpoint per workflow trigger.
+- Configurable HTTP method.
+- Request validation.
+- Appropriate response handling.
+- Authentication or secret-based verification where configured.
+- Execution logging.
+- Rate limiting.
+- Safe payload size limits.
+
+Only activate a webhook after validating the associated workflow.
+
+## Scheduling
+
+Implement a proper scheduling mechanism using an appropriate scheduling service.
+
+Requirements:
+
+- Timezone-aware scheduling.
+- Cron support where appropriate.
+- Activation and deactivation handling.
+- Duplicate-job prevention.
+- Accurate next-run previews.
+- Execution logging.
+- Safe recovery from application restarts.
+
+Do not present an unscheduled workflow as an active scheduled automation.
+
+---
+
+# 17. RESPONSIVE DESIGN
+
+Ensure that the complete application works across desktop, tablet, and mobile.
+
+**Desktop**
+
+- Full sidebar.
+- Three-panel workflow editor.
+- Spacious dashboard.
+- Full canvas controls.
+
+**Tablet**
+
+- Collapsible sidebar.
+- Adaptable configuration panel.
+- Responsive dashboard.
+- Usable canvas.
+
+**Mobile**
+
+- Mobile navigation.
+- Responsive cards.
+- Touch-friendly interactions.
+- Accessible node configuration drawer.
+- Canvas pan and zoom.
+
+Prioritize desktop usability for the workflow editor while ensuring that essential functionality remains accessible on smaller screens.
+
+---
+
+# 18. SECURITY, PERFORMANCE & RELIABILITY
+
+Apply secure engineering practices throughout the application.
+
+## Authentication & Authorization
+
+- Secure password hashing.
+- Protected routes.
+- User-level permissions.
+- Backend ownership verification.
+- Secure session handling.
+- Proper logout and token invalidation.
+
+## Input Validation
+
+- Validate all API inputs.
+- Validate node configuration.
+- Validate workflow graph structures.
+- Sanitize user-controlled content where necessary.
+- Return structured API error responses.
+
+## Credential Protection
+
+- Encrypt credentials at rest.
+- Keep encryption keys outside source code.
+- Never expose complete saved secrets.
+- Restrict credential access to the owner.
+
+## Workflow Execution Safety
+
+- Execution timeouts.
+- Resource limits.
+- Rate limiting.
+- Safe error handling.
+- SSRF protections for user-configured HTTP requests.
+- Restrictions on access to internal or sensitive network addresses.
+- Safe handling of webhook payloads.
+- No arbitrary code execution from user-provided expressions.
+
+## Performance
+
+- Efficient database queries.
+- Pagination for execution history.
+- Appropriate indexes.
+- Lazy loading where useful.
+- Avoid unnecessary frontend rendering.
+- Efficient workflow graph updates.
+
+## Reliability
+
+- Structured logging.
+- Database transaction handling.
+- Background job reliability where required.
+- Graceful error recovery.
+- Configuration validation.
+- Health-check endpoints.
+
+Never treat frontend validation as a replacement for backend security checks.
+
+---
+
+# 19. IMPLEMENTATION ROADMAP
+
+Implement CROX in the following engineering sequence.
+
+## Phase 1 — Project Inspection & Foundation
+
+- Inspect existing source code.
+- Identify architecture.
+- Set up the design system.
+- Configure database.
+- Build authentication.
+- Establish application layout.
+- Create core data models.
+
+## Phase 2 — Workflow Editor
+
+Highest priority.
+
+- Interactive canvas.
+- Node library.
+- Drag and drop.
+- Node connections.
+- Node configuration.
+- Graph validation.
+- Workflow save/load.
+- Node selection and deletion.
+- Responsive editor layout.
+
+## Phase 3 — Execution Engine
+
+- Execution planning.
+- Node adapters.
+- Data passing.
+- Conditional branching.
+- Execution states.
+- Error handling.
+- Execution persistence.
+- Execution report.
+
+## Phase 4 — Workflow Management
+
+- Dashboard.
+- Workflow CRUD.
+- Duplicate workflows.
+- Activation controls.
+- Search and filtering.
+- Workflow previews.
+
+## Phase 5 — Templates & NOVA
+
+- Templates library.
+- Template cloning.
+- AI assistant interface.
+- Natural-language workflow generation.
+- Workflow preview.
+- Editable generated graphs.
+
+## Phase 6 — Credentials & Integrations
+
+- Credential encryption.
+- Credential CRUD.
+- AI provider adapters.
+- Email provider adapter.
+- HTTP Request integration.
+- Webhooks.
+- Scheduling.
+
+## Phase 7 — Execution History & Settings
+
+- Execution history.
+- Detailed execution reports.
+- Profile management.
+- User preferences.
+- Account settings.
+
+## Phase 8 — Marketing Website & Final Polish
+
+- Landing page.
+- Pricing.
+- Marketing sections.
+- Responsive layouts.
+- Animations.
+- UI consistency.
+- Accessibility.
+- Final testing.
+
+Do not sacrifice core workflow functionality to prioritize decorative marketing pages.
+
+---
+
+# 20. QUALITY ASSURANCE & ACCEPTANCE TESTS
+
+Before considering CROX complete, verify the following practical requirements.
+
+## Authentication
+
+- [ ] A new user can register.
+- [ ] A user can log in.
+- [ ] A user can log out.
+- [ ] Protected routes reject unauthenticated users.
+- [ ] Passwords are securely hashed.
+- [ ] User-specific data is isolated.
+
+## Workflow Editor
+
+- [ ] Users can create a workflow.
+- [ ] Users can rename and save it.
+- [ ] Users can drag nodes onto the canvas.
+- [ ] Node connections work through actual handles.
+- [ ] Nodes can be moved, selected, duplicated, and deleted.
+- [ ] Node configurations can be modified.
+- [ ] Invalid connections are handled appropriately.
+- [ ] Workflow structures persist after refresh.
+- [ ] Existing workflows reopen with their original graph.
+
+## Execution Engine
+
+- [ ] Workflow validation works.
+- [ ] Nodes execute in the correct order.
+- [ ] Data passes between connected nodes.
+- [ ] Conditions execute the correct branch.
+- [ ] Skipped branches display appropriate states.
+- [ ] Failures produce meaningful error information.
+- [ ] Execution reports persist in the database.
+- [ ] The canvas reflects actual execution states.
+
+## Templates & NOVA
+
+- [ ] Templates create independent workflows.
+- [ ] Template node IDs are regenerated.
+- [ ] Workflow connections are preserved.
+- [ ] NOVA generates actual editable workflow structures.
+- [ ] Generated workflows can be saved and reopened.
+
+## Credentials
+
+- [ ] Users can create credentials.
+- [ ] Users can edit and delete credentials.
+- [ ] Stored secrets are encrypted.
+- [ ] Saved secrets are never returned in full.
+- [ ] Credentials cannot be accessed by another user.
+
+## Other Features
+
+- [ ] Execution history displays real records.
+- [ ] Account settings persist.
+- [ ] Responsive layouts work.
+- [ ] Important buttons perform their intended actions.
+- [ ] API errors are handled properly.
+- [ ] The application starts locally using the supplied instructions.
+
+Run available automated tests and add tests for critical business logic, security boundaries, workflow validation, branching, and execution behavior.
+
+Fix errors discovered during testing before declaring the corresponding feature complete.
+
+---
+
+# 21. FINAL DELIVERABLES
+
+Provide a complete, organized CROX application containing:
+
+1. Frontend application.
+2. Backend application.
+3. Database models.
+4. Database migrations.
+5. Authentication system.
+6. Protected application routes.
+7. Functional visual workflow editor.
+8. Node library and configuration system.
+9. Workflow graph persistence.
+10. Backend workflow execution engine.
+11. Conditional branching.
+12. Execution history.
+13. NOVA AI assistant.
+14. Workflow templates.
+15. Credential management.
+16. Integration adapter architecture.
+17. Webhook infrastructure.
+18. Scheduled execution support.
+19. Account settings.
+20. Responsive application layouts.
+21. Environment configuration example.
+22. Database setup instructions.
+23. Installation instructions.
+24. Development startup commands.
+25. Production deployment guidance.
+26. Automated tests for essential functionality.
+
+## Required Documentation
+
+Create a professional README containing:
+
+- Product overview.
+- Technology stack.
+- Project structure.
+- Prerequisites.
+- Installation steps.
+- Environment variable configuration.
+- Database setup.
+- Migration commands.
+- Frontend startup.
+- Backend startup.
+- Testing commands.
+- Available integrations.
+- External service configuration.
+- Known limitations.
+
+Provide an accurate `.env.example` file.
+
+Never include real API keys, passwords, encryption secrets, or production credentials in the repository.
+
+---
+
+# 22. FINAL PRODUCT COMPLETION STANDARD
+
+CROX should be considered complete only when its core product functionality works as a connected system.
+
+The following components must work together:
+
+**Authentication → Dashboard → Workflow Management → Visual Editor → Node Configuration → Workflow Persistence → Execution Engine → Execution History**
+
+NOVA must be capable of generating actual editable workflows.
+
+Templates must create independent workflow copies.
+
+Credentials must be securely stored and usable by authorized backend integration adapters.
+
+Webhook and scheduled triggers must have real activation infrastructure, not merely visual status toggles.
+
+The UI must accurately represent backend state.
+
+Do not mark features complete simply because their interface exists.
+
+## Final Development Priority
+
+1. Correct architecture and data integrity.
+2. Secure authentication and ownership.
+3. Functional visual workflow editor.
+4. Reliable workflow persistence.
+5. Correct execution and branching logic.
+6. Execution history.
+7. NOVA workflow generation.
+8. Templates and credentials.
+9. External integrations.
+10. Marketing website and visual polish.
+
+**THE FINAL OBJECTIVE**
+
+Deliver CROX as a professional, cohesive, extensible, and genuinely functional AI-powered workflow automation SaaS platform.
+
+It should deliver the power of visual workflow automation through a simpler, cleaner, more approachable experience.
+
+The final result should look and behave like a serious commercial software product — not a generic AI-generated website or an incomplete prototype.
+
+**Build the actual product. Verify its functionality. Preserve its design consistency. Document its limitations honestly.**
