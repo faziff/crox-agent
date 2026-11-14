@@ -1,8 +1,13 @@
-
 import 'dotenv/config';
-import { createRequire } from 'node:module';
+import { register } from 'node:module';
 
-const require = createRequire(import.meta.url);
-const { startServer } = require('./dist/server.cjs');
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'production';
+}
 
-startServer();
+// Register tsx's loader IN THIS SAME PROCESS so we can import server.ts
+// directly — no child_process, no missing dist bundle, no separate
+// process that Hostinger's listen() monitor can't see into.
+register('tsx/esm', import.meta.url);
+
+await import('./server.ts');
