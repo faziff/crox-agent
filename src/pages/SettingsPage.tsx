@@ -130,7 +130,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onOpenAiProviders })
           Account Settings
         </h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-          Manage your profile, appearance theme, timezone, and security sessions.
+          Manage your profile, dark-first appearance, timezone, and security sessions.
         </p>
       </div>
 

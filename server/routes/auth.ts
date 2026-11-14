@@ -11,9 +11,37 @@ import {
 } from '../middleware/auth.ts';
 import { ensureDefaultProject } from '../services/projectService.ts';
 import { installTemplateForUser } from '../services/templateService.ts';
+import { createRateLimiter } from '../middleware/rateLimit.ts';
 import { generateRandomToken, hashPassword, hashToken, verifyPassword } from '../utils/crypto.ts';
 
 const router = Router();
+
+// Authentication endpoints are common brute-force and abuse targets.
+// Limits are intentionally per endpoint and per client IP.
+const registerRateLimit = createRateLimiter({
+  name: 'auth-register',
+  limit: 5,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many registration attempts. Please try again in an hour.',
+});
+const loginRateLimit = createRateLimiter({
+  name: 'auth-login',
+  limit: 10,
+  windowMs: 15 * 60 * 1000,
+  message: 'Too many login attempts. Please try again in 15 minutes.',
+});
+const demoRateLimit = createRateLimiter({
+  name: 'auth-demo',
+  limit: 10,
+  windowMs: 15 * 60 * 1000,
+  message: 'The demo workspace is temporarily rate-limited. Please try again later.',
+});
+const passwordRecoveryRateLimit = createRateLimiter({
+  name: 'auth-password-recovery',
+  limit: 5,
+  windowMs: 15 * 60 * 1000,
+  message: 'Too many password recovery attempts. Please try again in 15 minutes.',
+});
 
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
 
@@ -58,7 +86,7 @@ function createSessionForUser(req: AuthenticatedRequest, res: Response, userId: 
   return rawToken;
 }
 
-router.post('/register', async (req: AuthenticatedRequest, res: Response) => {
+router.post('/register', registerRateLimit, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const fullName = String(req.body?.fullName || '').trim();
     const email = String(req.body?.email || '').trim().toLowerCase();
@@ -95,7 +123,7 @@ router.post('/register', async (req: AuthenticatedRequest, res: Response) => {
 
     db.prepare(
       `INSERT INTO users (id, full_name, email, password_hash, timezone, theme, notifications_enabled, plan, created_at, updated_at)
-       VALUES (?, ?, ?, ?, 'UTC', 'light', 1, 'free', ?, ?)`
+       VALUES (?, ?, ?, ?, 'UTC', 'dark', 1, 'free', ?, ?)`
     ).run(userId, fullName, email, passwordHash, nowIso, nowIso);
 
     ensureDefaultProject(db, userId);
@@ -112,7 +140,7 @@ router.post('/register', async (req: AuthenticatedRequest, res: Response) => {
   }
 });
 
-router.post('/login', async (req: AuthenticatedRequest, res: Response) => {
+router.post('/login', loginRateLimit, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const email = String(req.body?.email || '').trim().toLowerCase();
     const password = String(req.body?.password || '');
@@ -146,7 +174,7 @@ router.post('/login', async (req: AuthenticatedRequest, res: Response) => {
   }
 });
 
-router.post('/demo', async (req: AuthenticatedRequest, res: Response) => {
+router.post('/demo', demoRateLimit, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const db = getDb();
     const demoEmail = 'demo@crox.app';
@@ -161,7 +189,7 @@ router.post('/demo', async (req: AuthenticatedRequest, res: Response) => {
 
       db.prepare(
         `INSERT INTO users (id, full_name, email, password_hash, timezone, theme, notifications_enabled, plan, created_at, updated_at)
-         VALUES (?, 'Demo Workspace', ?, ?, 'UTC', 'light', 1, 'pro', ?, ?)`
+         VALUES (?, 'Demo Workspace', ?, ?, 'UTC', 'dark', 1, 'pro', ?, ?)`
       ).run(userId, demoEmail, passwordHash, nowIso, nowIso);
 
       ensureDefaultProject(db, userId);
@@ -172,6 +200,8 @@ router.post('/demo', async (req: AuthenticatedRequest, res: Response) => {
 
       userRow = db.prepare('SELECT * FROM users WHERE id = ?').get(userId) as Record<string, unknown> & { id: string };
     } else {
+      db.prepare("UPDATE users SET theme = 'dark' WHERE id = ?").run(userRow.id);
+      userRow.theme = 'dark';
       ensureDefaultProject(db, userRow.id);
       const wfCount = db.prepare('SELECT COUNT(*) as cnt FROM workflows WHERE user_id = ?').get(userRow.id) as {
         cnt: number;
@@ -204,7 +234,7 @@ router.get('/me', requireAuth, (req: AuthenticatedRequest, res: Response) => {
   res.json({ user: req.user });
 });
 
-router.post('/forgot-password', async (req: AuthenticatedRequest, res: Response) => {
+router.post('/forgot-password', passwordRecoveryRateLimit, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const email = String(req.body?.email || '').trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -264,7 +294,7 @@ router.post('/forgot-password', async (req: AuthenticatedRequest, res: Response)
   }
 });
 
-router.post('/reset-password', async (req: AuthenticatedRequest, res: Response) => {
+router.post('/reset-password', passwordRecoveryRateLimit, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const token = String(req.body?.token || '').trim();
     const password = String(req.body?.password || '');

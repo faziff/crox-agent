@@ -9,7 +9,7 @@ CROX is an existing full-stack workflow automation application with a React visu
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, `@xyflow/react`, Lucide React, Motion
 - **Backend:** Node.js, Express 4, TypeScript via `tsx`, Google GenAI SDK
 - **Database:** SQLite via `better-sqlite3`, with incremental schema migrations
-- **Security:** HttpOnly session cookies, bcrypt password hashing, AES-256-GCM credential encryption, SSRF checks with redirect blocking, permission-restricted Code Node worker
+- **Security:** HttpOnly session cookies, bcrypt password hashing, endpoint-specific in-process authentication rate limits, baseline security headers, AES-256-GCM credential encryption, SSRF checks with redirect blocking, permission-restricted Code Node worker
 - **Tests:** Vitest
 
 ## Prerequisites
@@ -29,12 +29,12 @@ Important environment variables:
 
 - `GEMINI_API_KEY`: optional server-side Gemini key used by NOVA and Gemini model operations.
 - `CREDENTIAL_ENCRYPTION_KEY`: encryption master key; required in production. Use a strong random value and keep it backed up securely.
-- `SESSION_SECRET`: stable secret for signing session cookies.
 - `DATABASE_PATH`: optional SQLite database path; defaults to `./data/crox.db`.
 - `PORT`: optional HTTP port; defaults to `3000`.
+- `SCHEDULER_CONCURRENCY`: maximum number of scheduled workflows dispatched concurrently in this process; defaults to `3` and is capped at `10`.
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`: optional SMTP settings for password-recovery delivery.
 
-The `.env` file and `data/` directory are excluded from the project archive by `.gitignore`.
+The `.env` file and `data/` directory are excluded from version control by `.gitignore`.
 
 ## Run
 
@@ -85,12 +85,13 @@ npm run clean
 ## Current functionality and honest status
 
 - **Projects:** Project records, user ownership checks, workflow project associations, default Personal project backfill, archive and project management API.
+- **Appearance:** Premium dark mode is the default and initial page paint. Existing accounts are migrated to dark mode; users may still explicitly select light mode in Settings.
 - **Canvas:** Interactive dotted React Flow canvas, zoom and fit controls, mini-map, custom nodes, a searchable node picker, sticky notes, grouping, undo/redo, and workflow persistence.
 - **Workflow structures:** Blank, linear, branching, AI Agent, event-driven, and Multi-Agent starter graphs. AI Agent and Agent Orchestrator support separate typed model, memory, tool, and output-parser attachments.
 - **AI Providers:** Backend provider configuration, encrypted key storage, model discovery where supported, connection testing, capability metadata, and explicit provider failover. Provider quota errors do not trigger key cycling to bypass limits.
 - **AI Agents:** Agent execution, connected model/tool/memory/output-parser support, bounded tool loops, traces, and persistent memory services.
 - **Integrations:** Registry-driven connectors and generic HTTP paths. The Integrations screen differentiates working connectors from connectors that still require implementation or credentials; a catalogue entry is not a claim of a completed app connector.
-- **Execution:** Persisted workflow executions and node results, inspection panels, validation, scheduling, webhook entry points, and execution error reporting.
+- **Execution:** Persisted workflow executions and node results, inspection panels, validation, webhook entry points, and execution error reporting. The in-process scheduler dispatches due workflows with bounded concurrency; this is still a single-instance scheduler, not a distributed job queue.
 - **NOVA:** Existing workflow assistant remains part of the application.
 - **Credentials:** Secrets are stored encrypted by backend services and masked in API responses.
 - **Outbound HTTP:** Server-side HTTP calls validate external hosts, reject embedded URL credentials, block private/internal address ranges (including hexadecimal IPv4-mapped IPv6), and do not follow redirects.
@@ -105,7 +106,7 @@ The application initializes SQLite and applies pending migrations on server star
 
 ## Known limitations
 
-- SQLite and scheduler locks are intended for a single application instance. Horizontal scaling needs a shared database/lock design and a distributed scheduler.
+- SQLite, in-process authentication rate limits, and scheduler locks are intended for a single application instance. The scheduler dispatches due jobs with bounded concurrency and coalesces missed cron ticks; horizontal scaling needs a shared database/lock design, Redis-backed rate limits, and a distributed scheduler/queue.
 - The node registry is broader than the set of fully supported external app actions. Check each integration's availability and authentication status before using it in a live workflow.
 - Not all integrations in the requested roadmap are implemented. The UI must continue to mark unfinished connectors as coming soon rather than presenting them as connected.
 - The current billing experience does not provide a complete live subscription checkout and entitlement-management flow.

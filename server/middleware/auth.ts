@@ -27,7 +27,7 @@ export function mapUserRow(row: Record<string, unknown>): UserProfile {
     email: row.email as string,
     avatarUrl: (row.avatar_url as string | null) ?? null,
     timezone: (row.timezone as string) || 'UTC',
-    theme: row.theme === 'dark' ? 'dark' : 'light',
+    theme: row.theme === 'light' ? 'light' : 'dark',
     notificationsEnabled: Boolean(row.notifications_enabled),
     plan: row.plan === 'pro' ? 'pro' : 'free',
     createdAt: row.created_at as string,

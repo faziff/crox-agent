@@ -23,9 +23,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       const saved = window.localStorage.getItem('crox_theme');
-      if (saved === 'dark' || saved === 'light') return saved;
+      if (saved === 'dark') return 'dark';
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {
@@ -90,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     async (fullName: string, email: string, password: string, confirmPassword: string) => {
       const res = await api.auth.register(fullName, email, password, confirmPassword);
       setUser(res.user);
+      setTheme(res.user.theme === 'light' ? 'light' : 'dark');
       return res.user;
     },
     []

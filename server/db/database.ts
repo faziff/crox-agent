@@ -30,7 +30,7 @@ const migrations: Migration[] = [
           password_hash TEXT NOT NULL,
           avatar_url TEXT,
           timezone TEXT NOT NULL DEFAULT 'UTC',
-          theme TEXT NOT NULL DEFAULT 'light',
+          theme TEXT NOT NULL DEFAULT 'dark',
           notifications_enabled INTEGER NOT NULL DEFAULT 1,
           plan TEXT NOT NULL DEFAULT 'free',
           created_at TEXT NOT NULL,
@@ -338,6 +338,16 @@ const migrations: Migration[] = [
       if (!hasColumn(db, 'credentials', 'provider_meta')) {
         db.exec(`ALTER TABLE credentials ADD COLUMN provider_meta TEXT NOT NULL DEFAULT '{}'`);
       }
+    },
+  },
+  {
+    version: 5,
+    name: '005_dark_first_theme_default',
+    up: (db) => {
+      // The previous application defaulted every new account to light mode.
+      // Normalize that historical default to CROX's new dark-first appearance.
+      // Users can still explicitly choose light mode later in Settings.
+      db.prepare("UPDATE users SET theme = 'dark' WHERE theme IS NULL OR theme = '' OR theme = 'light'").run();
     },
   },
 ];

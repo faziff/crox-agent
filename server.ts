@@ -42,6 +42,18 @@ async function startServer() {
   const app = express();
   app.set('trust proxy', config.isProd ? 1 : false);
 
+  app.use((_req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+    if (config.isProd && _req.secure) {
+      res.setHeader('Strict-Transport-Security', 'max-age=15552000');
+    }
+    next();
+  });
+
   app.use(express.json({ limit: '512kb' }));
   app.use(express.urlencoded({ extended: true, limit: '512kb' }));
   app.use(cookieParser());

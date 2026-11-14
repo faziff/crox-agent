@@ -9,6 +9,8 @@ import {
 import { ensureDefaultProject, listProjectsForUser } from '../server/services/projectService';
 import { describe, expect, it } from 'vitest';
 import { initDatabase } from '../server/db/database';
+import { consumeRateLimit } from '../server/middleware/rateLimit';
+import { mapUserRow } from '../server/middleware/auth';
 import { executeWorkflow, testSingleNode } from '../server/services/executionEngine';
 import { cloneTemplateNodesAndEdges, WORKFLOW_TEMPLATES } from '../server/services/templateService';
 import { validateWorkflowGraph } from '../server/services/workflowValidator';
@@ -33,6 +35,48 @@ import {
 import { INTEGRATION_CATALOG } from '../server/services/integrationService';
 import { createWorkflowNode } from '../src/constants/nodeCatalog';
 import { WorkflowEdge, WorkflowNode, WorkflowRecord } from '../src/types/workflow';
+
+describe('CROX Product Defaults & Abuse Protection', () => {
+  it('uses dark as the database default for newly inserted accounts', () => {
+    const db = initDatabase(':memory:');
+    const columns = db.prepare('PRAGMA table_info(users)').all() as Array<{ name: string; dflt_value: string | null }>;
+    const themeColumn = columns.find((column) => column.name === 'theme');
+    expect(themeColumn?.dflt_value).toBe("'dark'");
+  });
+
+  it('defaults new or incomplete user theme records to dark while preserving explicit light preference', () => {
+    const base = {
+      id: 'u_theme', full_name: 'Theme User', email: 'theme@crox.dev', avatar_url: null,
+      timezone: 'UTC', notifications_enabled: 1, plan: 'free', created_at: '2026-01-01T00:00:00.000Z',
+      updated_at: '2026-01-01T00:00:00.000Z',
+    };
+    expect(mapUserRow({ ...base, theme: null }).theme).toBe('dark');
+    expect(mapUserRow({ ...base, theme: 'dark' }).theme).toBe('dark');
+    expect(mapUserRow({ ...base, theme: 'light' }).theme).toBe('light');
+  });
+
+  it('allows requests up to a fixed-window limit and rejects the next request', () => {
+    const key = `test-rate-limit-${Date.now()}-${Math.random()}`;
+    const start = 1_000_000;
+    const first = consumeRateLimit(key, 2, 60_000, start);
+    const second = consumeRateLimit(key, 2, 60_000, start + 1);
+    const third = consumeRateLimit(key, 2, 60_000, start + 2);
+    expect(first.allowed).toBe(true);
+    expect(first.remaining).toBe(1);
+    expect(second.allowed).toBe(true);
+    expect(second.remaining).toBe(0);
+    expect(third.allowed).toBe(false);
+    expect(third.retryAfterSeconds).toBeGreaterThan(0);
+  });
+
+  it('starts a fresh rate-limit window after the previous window expires', () => {
+    const key = `test-rate-reset-${Date.now()}-${Math.random()}`;
+    consumeRateLimit(key, 1, 1_000, 2_000_000);
+    const nextWindow = consumeRateLimit(key, 1, 1_000, 2_001_001);
+    expect(nextWindow.allowed).toBe(true);
+    expect(nextWindow.remaining).toBe(0);
+  });
+});
 
 describe('CROX Core Security & Crypto', () => {
   it('hashes and verifies passwords securely with bcrypt', async () => {

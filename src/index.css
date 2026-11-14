@@ -16,6 +16,33 @@
   html {
     font-family: var(--font-sans);
     scroll-behavior: smooth;
+    background: #0b0d12;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    background: #0b0d12;
+  }
+
+  html:not(.dark) {
+    color-scheme: light;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: #ffffff;
+  }
+
+  html.dark body {
+    color: #e8ecf3;
+    background: #0b0d12;
+  }
+
+  html.dark select option {
+    color: #e8ecf3;
+    background: #141923;
   }
 
   h1, h2, h3, h4, .font-display {

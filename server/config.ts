@@ -37,17 +37,6 @@ export function getCredentialEncryptionKey(): { keyHex: string; source: 'env' | 
   return { keyHex: resolveDevKey('.dev-credential-key'), source: 'dev-file' };
 }
 
-export function getSessionSecret(): string {
-  const envSecret = process.env.SESSION_SECRET?.trim();
-  if (envSecret && envSecret !== 'replace-with-a-long-random-secret-in-production') {
-    return envSecret;
-  }
-  if (isProd) {
-    return crypto.randomBytes(32).toString('hex');
-  }
-  return resolveDevKey('.dev-session-key');
-}
-
 export function getGeminiApiKey(): string {
   const raw = process.env.GEMINI_API_KEY?.trim();
   if (!raw || raw === 'MY_GEMINI_API_KEY') {
@@ -77,5 +66,6 @@ export const config = {
     defaultTimeoutMs: 15000,
     maxWorkflowTimeoutMs: 60000,
     maxWebhookPayloadBytes: 512 * 1024,
+    schedulerConcurrency: Number(process.env.SCHEDULER_CONCURRENCY || 3),
   },
 };
