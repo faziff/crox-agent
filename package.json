@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build",
-    "start": "tsx scripts/start-production.ts",
+    "start": "node index.js",
     "preview": "vite preview",
     "clean": "node scripts/clean.mjs",
     "lint": "tsc --noEmit",
@@ -48,5 +48,6 @@
   },
   "engines": {
     "node": ">=22.13.0"
-  }
+  },
+  "main": "index.js"
 }
