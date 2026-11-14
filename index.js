@@ -1,24 +1,8 @@
 
-import { spawn } from "node:child_process";
+import 'dotenv/config';
+import { createRequire } from 'node:module';
 
-const server = spawn(
-  process.execPath,
-  ["--import", "tsx", "server.ts"],
-  {
-    cwd: process.cwd(),
-    env: {
-      ...process.env,
-      NODE_ENV: "production"
-    },
-    stdio: "inherit"
-  }
-);
+const require = createRequire(import.meta.url);
+const { startServer } = require('./dist/server.cjs');
 
-server.on("error", (error) => {
-  console.error("CROX startup error:", error);
-  process.exit(1);
-});
-
-server.on("exit", (code) => {
-  process.exit(code ?? 1);
-});
+startServer();
